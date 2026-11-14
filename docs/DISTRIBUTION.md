@@ -41,6 +41,16 @@
 - Integrity：`sha512-urcSqZjqq8YBMhlqEALyDYmLK1UPmeF7y0uHzNRcd9A9H4dyoezz82IlZI6PNXbXxE1mMXeWwc5zowcF9oY5YA==`。
 - 公开包确为 12 个预期文件、没有生产依赖；在独立临时目录中禁用网络，加载双入口、bootstrap、同一图标、中英文卡片均通过。`main` 为 `./opencode.mjs`，`exports["."]` 为 `./opencode2.mjs`。
 
+## npm 可信 CI 发布（配置中）
+
+2026-11-14，用户进一步要求创建 GitHub npm 可信 CI 发布流程。实现位于 `.github/workflows/publish.yml`，具体维护步骤见 [RELEASING.md](RELEASING.md)。
+
+- GitHub `npm` environment 已创建，selected deployment policy 仅允许类型为 tag 的 `v*`。
+- 使用 GitHub-hosted runner、Node 24 / npm 12.2.2；validate 无 OIDC，publish job 单独取得 `id-token: write`。未添加 npm token secret。
+- 稳定 Release 自动发布，手动运行仅 dry-run；验证不可变事件 SHA、main 历史、tag 与版本一致性、锁文件及版本未发布。验证与发布保持同一 SHA。
+- 77 项离线测试、Node / 实际安装包检查与 actionlint 通过。审查修正了同名分支可能覆盖 tag checkout，以及共享 concurrency 挤掉待执行 release 的问题。
+- npm 绑定待官方浏览器 2FA 保存；计划以 `0.1.1` 首次 CI 发布验证 OIDC 和 provenance。仅保存配置或 dry-run 不作为实际可信发布成功。
+
 ## 执行结果
 
 1. GitHub 公开仓库、源码推送与 Node 22 / 24 CI 已完成。

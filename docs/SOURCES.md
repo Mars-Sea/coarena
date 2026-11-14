@@ -116,3 +116,10 @@ River是API Key与简单provider最接近的完整工程样本；不是Coarena�
 - [维护者 yetone 在 PR #1122 的回复](https://github.com/magpie-community/plugins/pull/1122#issuecomment-6871683565) 将 Coarena 定义为通过一个 Key 提供其他实验室模型的第三方中转服务，说明 registry 暂不直接收录此类提供商，未来将有相关合作方案，并关闭 PR。
 - 影响：通用外部 npm 插件提交文档与 schema 校验通过，并不足以代表服务类别符合人工收录政策。以本次维护者的直接反馈为准，记录为“已提交、因政策关闭、未收录”。
 - 调整：保留独立 GitHub / npm 分发及按名称安装；不重新打开 PR 或改换分类规避该政策。维护者明确确认 `magpie plugin add coarena` 仍可使用；本次未进行真实宿主安装或推理验收。
+
+## 2026-11-14 npm 可信发布复核
+
+- 用户要求创建 GitHub npm 可信 CI 发布。完整阅读 [npm Trusted Publishers](https://docs.npmjs.com/trusted-publishers/) 官方页面，并复核本机 npm 12.2.2 的 `npm trust` 文档及 GitHub / list 命令实现。
+- 当前官方要求 npm >=11.5.1、Node >=22.14、GitHub-hosted runner 及 job 的 `id-token: write`；workflow 字段仅填写文件名，repo、workflow、environment 大小写须匹配。新绑定默认 stage-only，独立直接发布须显式 `--allow-publish`。公开仓库与包可自动生成 provenance。
+- 最新官方文档说明最多 10 个 trusted publishers；本机随 npm 附带的旧文档仍称最多一个，以最新官方文档为准。新绑定需在 2 天内首次成功发布，否则过期；首次成功后固定仓库身份。
+- 调整：固定 `Mars-Sea/coarena`、`publish.yml`、`npm` 环境，稳定 GitHub Release 触发实际发布，manual 仅 dry-run。以一次真实 `0.1.1` CI 发布验证绑定，而不是将保存配置视为成功。具体结果记录于分发文档；不添加长期 npm token，不改变真实 Coarena 推理 / limits 验收范围。

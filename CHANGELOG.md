@@ -1,5 +1,11 @@
 # 变更记录
 
+## 0.1.1 — 2026-11-14
+
+- 新增 GitHub Actions npm Trusted Publishing：稳定版 Release 自动发布，手动触发仅验证与 dry-run；无长期 npm Token，发布生成 provenance。
+- 发布前核对事件 SHA、main 历史、版本 / tag / 锁文件一致性及 npm 版本不存在；验证与发布使用同一提交，GitHub `npm` 环境限制为 `v*` 标签。
+- 增加发布边界回归与公开 tarball / provenance 元数据核验脚本，以及维护者发布文档。既有提供商、模型及额度行为不变。
+
 ## 0.1.0 — 2026-11-14
 
 首次实现 Coarena 的 P0：

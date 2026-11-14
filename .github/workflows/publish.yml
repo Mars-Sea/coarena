@@ -1,0 +1,78 @@
+name: Publish npm
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-publish-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: github.repository == 'Mars-Sea/coarena'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      commit: ${{ steps.source.outputs.commit }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org/
+          package-manager-cache: false
+      - uses: oven-sh/setup-bun@v2.2.0
+        with:
+          bun-version: 1.4.4
+      - run: npm install --global npm@12.2.2 --ignore-scripts
+      - name: Check release metadata and source
+        id: source
+        run: |
+          node scripts/check-release.mjs
+          if [ "$GITHUB_EVENT_NAME" = release ]; then
+            git merge-base --is-ancestor HEAD origin/main
+          fi
+          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - run: npm ci --ignore-scripts
+      - run: npm run prepublishOnly
+      - name: Preview the exact package without publishing
+        run: npm publish --dry-run --ignore-scripts --access public
+
+  publish:
+    if: github.event_name == 'release'
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: npm
+      url: https://www.npmjs.com/package/coarena
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ needs.validate.outputs.commit }}
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org/
+          package-manager-cache: false
+      - run: npm install --global npm@12.2.2 --ignore-scripts
+      - run: node scripts/check-release.mjs
+      # validate already ran prepublishOnly against this exact commit.
+      # This package has no build output or production dependencies.
+      - name: Publish using npm Trusted Publishing and provenance
+        run: npm publish --ignore-scripts --access public --provenance
+      - name: Verify the public version and tarball
+        run: node scripts/verify-published.mjs

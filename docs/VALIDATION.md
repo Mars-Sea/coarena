@@ -1,6 +1,6 @@
 # 实施验证报告
 
-验证日期：2026-11-14。插件：**Coarena**，版本：`coarena@0.1.0`。
+验证日期：2026-11-14。插件：**Coarena**，本次工作树版本：`coarena@0.1.1`；npm 可信发布结果单独记录于分发记录。
 
 **结论：P0 的 M1–M5 实现与对应离线项已完成；真实 Coarena 账号和 Magpie / OpenCode 宿主端到端验收未验证。** GitHub / npm / Magpie 分发进度单独记录于 [DISTRIBUTION.md](DISTRIBUTION.md)。没有读取真实 Coarena Key，也没有发送真实推理、额度申请或反馈请求。
 
@@ -25,13 +25,15 @@
 
 | 命令 / 检查 | 结果 | 实际覆盖 |
 | --- | --- | --- |
-| `bun test` | **68 pass，0 fail，5 个测试文件** | 本插件单测、中英文卡片、setup 桥接、真实 SDK 到本地合成 HTTP |
+| `bun test` | **77 pass，0 fail，6 个测试文件** | 本插件单测、中英文卡片、setup 桥接、真实 SDK 到本地合成 HTTP，以及发布事件 / tag / 锁文件边界 |
 | `bun run check` | 通过，12 个打包文件 | 双入口、单函数 main、provider / auth / usage 契约、内嵌官网图标、离线 config、相对 import 与生产依赖检查 |
 | `npm run check:node` | 通过 | Node 双入口和 config；Request stream、credentials、init 覆盖、URL 重映射、已消费 body 替换、代理选项与取消 |
 | `npm pack --dry-run --json` | 通过，12 个文件 | 最终 npm 清单含 SVG 与语言模块；无 docs/reference、测试、node_modules、.env、凭据或宿主配置 |
 | `npm run check:package` | 通过，12 个文件 | 持久化的实际打包 / 解包脚本；临时目录无 node_modules，禁用网络仍可加载双入口、模型、图标、中英文切换 |
 | 公开 npm tarball 下载验证 | 通过 | 实际 `coarena@0.1.0` 的哈希、源码版本、12 文件、双入口、图标与语言一致，详见 DISTRIBUTION.md |
 | GitHub CI Node 22 / 24 | 通过 | 发布源码 `4c9d7eb` 的两个 Linux job 均成功 |
+| `node scripts/check-release.mjs` | 通过，手动演练模式 | 稳定版本、仓库元数据、锁文件一致性；无发布动作 |
+| actionlint 1.7.12 | 通过 | validate.yml 与 publish.yml 的静态语法 / 表达式检查 |
 | `git diff --check` | 通过 | 已跟踪文档无空白错误 |
 | 归档 SHA-256 校验 | 15 个文件全部一致 | docs/reference 内容未被修改 |
 | `npm audit --omit=dev --json` | 0 个生产依赖审计项 | 包无生产依赖 |
@@ -84,7 +86,7 @@
 
 Bun 1.4.4 构造 Request 时将 `credentials:"omit"` 读回为 `include`，Node 24.22.3 则保留 `omit`。测试分别验证 Bun 下原属性不被转发改变，以及 Node 下完整标准语义，未把此结果当作真实宿主网络配置验收。
 
-独立只读审查发现的 3 个边界问题均已修正并覆盖回归：零上限不可从 left0 推断未知 amount；URL 重映射时 init.body 须先覆盖原 body；错误 JSON 为 null 仍保留 HTTP / request ID / Retry-After。当时 63 项测试在修正后通过；补充图标与语言支持后的最终结果为 68 项通过。
+独立只读审查发现的 3 个边界问题均已修正并覆盖回归：零上限不可从 left0 推断未知 amount；URL 重映射时 init.body 须先覆盖原 body；错误 JSON 为 null 仍保留 HTTP / request ID / Retry-After。当时 63 项测试在修正后通过；图标与语言支持后为 68 项，新增发布边界后为 77 项通过。
 
 ## 插件名称
 

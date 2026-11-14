@@ -4,7 +4,7 @@
 
 为 **Magpie、OpenCode 1.x 和 OpenCode 2.x** 接入 Coarena Model API 的独立插件。Provider ID 为 `coarena`，首版使用 OpenAI Chat Completions 兼容协议，基址为 `https://coarena.ai/api/v1`。
 
-**当前状态：0.1.0 的 P0 代码与离线验证已完成，真实账号和宿主验收尚未完成。** 源码仓库：[Mars-Sea/coarena](https://github.com/Mars-Sea/coarena)，npm 包：[`coarena`](https://www.npmjs.com/package/coarena)。Magpie 收录进度见 [分发记录](https://github.com/Mars-Sea/coarena/blob/main/docs/DISTRIBUTION.md)，验证边界见 [验证报告](https://github.com/Mars-Sea/coarena/blob/main/docs/VALIDATION.md)。
+**当前状态：P0 代码与离线验证已完成，真实账号和宿主验收尚未完成。** 源码仓库：[Mars-Sea/coarena](https://github.com/Mars-Sea/coarena)，npm 包：[`coarena`](https://www.npmjs.com/package/coarena)。Magpie 收录进度见 [分发记录](https://github.com/Mars-Sea/coarena/blob/main/docs/DISTRIBUTION.md)，验证边界见 [验证报告](https://github.com/Mars-Sea/coarena/blob/main/docs/VALIDATION.md)。
 
 支持宿主保存 API Key、公开动态模型目录、工具与图片能力映射，以及 Magpie 的每日美元额度与请求次数显示。普通请求和流式响应交给宿主的 OpenAI Compatible SDK；插件不自行解析 SSE。Responses、Anthropic 原生协议、提额、评价和历史查询留待后续版本。
 
@@ -116,6 +116,8 @@ npm pack --dry-run
 ```
 
 GitHub CI 在 Node 22 / 24 上执行离线验证；`prepublishOnly` 在发布前执行测试、Node 检查与实际解包检查。`npm run check:package` 使用临时目录，不访问服务或读取真实 Key。
+
+npm 发布由 GitHub Actions 的 **Publish npm** workflow 负责：稳定版 GitHub Release 触发 OIDC 可信发布并生成 provenance，手动运行只验证和 dry-run。首次可信绑定及实际 CI 发布结果见 [发布流程](docs/RELEASING.md) 与 [分发记录](docs/DISTRIBUTION.md)。
 
 `bunfig.toml` 将默认测试限定在 `tests/`，不运行 `docs/reference` 下的参考插件测试。默认测试不读取真实凭据；网络守卫只允许合成服务的 `127.0.0.1` HTTP，其余请求全部拒绝。SDK `2.0.41` 仅为开发依赖，用于匹配参考桥接；宿主负责实际 SDK 的加载。
 
