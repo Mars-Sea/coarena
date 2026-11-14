@@ -24,6 +24,8 @@ magpie quota coarena --json
 
 也可使用 `magpie plugin add github:Mars-Sea/coarena` 从 GitHub 安装。
 
+本插件目前**未获 Magpie registry 收录**：维护者将 Coarena 归类为第三方中转服务，当前暂不直接收录此类提供商；[PR #1122 的维护者说明](https://github.com/magpie-community/plugins/pull/1122#issuecomment-6871683565) 明确确认按包名安装仍可使用。
+
 在 [Coarena API 页面](https://coarena.ai/account/api) 创建 Key，在登录交互中选择 `Coarena API key` 并粘贴。Key 由宿主保存，本插件不创建自己的凭据文件。选择 `coarena/<模型ID>` 开始对话；模型 ID 以当前公开目录为准。首次加载时无需 Key 也能发现目录。
 
 实际推理验收可在具备测试账号后运行 `magpie provider test coarena`；这会发送真实请求并消耗额度。安装或编辑后如列表未更新，可重新加载插件；App 中可能需要禁用后重新启用。

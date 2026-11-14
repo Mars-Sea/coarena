@@ -9,7 +9,7 @@
 | GitHub | https://github.com/Mars-Sea/coarena | 已创建公开仓库并推送 `main`；实现提交 `f6ec210` |
 | GitHub Release | [Coarena 0.1.0](https://github.com/Mars-Sea/coarena/releases/tag/v0.1.0) | 已发布，tag 指向 npm `gitHead` 对应的 `4c9d7eb` |
 | npm | [`coarena@0.1.0`](https://www.npmjs.com/package/coarena) | 已公开发布，`latest` 为 `0.1.0`；公开 tarball 下载与核验通过 |
-| Magpie | [收录 PR #1122](https://github.com/magpie-community/plugins/pull/1122) | 已正式提交，PR 为 OPEN / 非草稿；等待上游检查与维护者审核，尚未合并 |
+| Magpie | [收录 PR #1122](https://github.com/magpie-community/plugins/pull/1122) | 已提交，维护者因第三方中转服务收录政策关闭；未合并，未获 registry 收录 |
 
 ## 发布前验证
 
@@ -23,8 +23,14 @@
 
 - 官方当前 [README / The market](https://github.com/magpie-community/plugins#the-market) 要求修改 `registry.json` 并提 PR。已基于提交 `9bca17b5d22507d0a901e45002936367a0875b85`，在临时隔离 checkout 中追加一个独立 provider 条目，未改动相邻 plugins 仓库。
 - 条目仅使用 `package`、`name`、`icon`、`providers` 与中英文 `summary`；省略 `kind`、`community`、`replaces`。已通过该提交的 `scripts/registry.mjs` 官方校验，且核对所有既有条目不变。
-- 分支：[Mars-Sea/plugins:add-coarena](https://github.com/Mars-Sea/plugins/tree/add-coarena)，提交 `aec89a2`。npm 验证后已创建 [PR #1122](https://github.com/magpie-community/plugins/pull/1122)；提交正文保存在 [MAGPIE-SUBMISSION.md](MAGPIE-SUBMISSION.md)。截至记录时，官方 `on-npm` 检查已成功，`test` 仍在运行，PR 可合并但尚未合并。
-- 独立仓库已启用 `magpie-plugin` topic，用于非官方自动发现；等待抓取，不将 topic 设置成功当作已经在 App 显示。人工审核的 registry PR 和社区推荐徽章分别记录，当前没有申请 `community` 徽章。
+- 分支：[Mars-Sea/plugins:add-coarena](https://github.com/Mars-Sea/plugins/tree/add-coarena)，提交 `aec89a2`。npm 验证后创建 [PR #1122](https://github.com/magpie-community/plugins/pull/1122)，正文保存在 [MAGPIE-SUBMISSION.md](MAGPIE-SUBMISSION.md)。官方 `on-npm` 检查成功，维护者随后因收录政策关闭 PR；关闭时 `test` 尚在运行，没有合并。
+- 独立仓库已设置 `magpie-plugin` topic，作为插件类型元数据；市场实际显示未验证，不将 topic 设置成功当作人工收录。未申请 `community` 徽章。
+
+## Magpie 维护者反馈
+
+2026-11-14，维护者 yetone 在 [PR 评论](https://github.com/magpie-community/plugins/pull/1122#issuecomment-6871683565) 中说明：Coarena Model API 通过一个 Key 提供其他实验室的模型，因此属于第三方中转提供商，registry 当前不直接收录；“感谢关注，日后会出相关合作方案，敬请期待。”PR 随即关闭，未合并。
+
+维护者同时明确：包仍可通过 `magpie plugin add coarena` 按名称安装，暂停的是 registry listing。本次不重新打开或改换分类提交；后续收录需等待官方合作 / 政策变化。真实 CLI 安装与推理仍未实机验收。
 
 ## npm 发布与公开安装包验证
 
@@ -39,6 +45,6 @@
 
 1. GitHub 公开仓库、源码推送与 Node 22 / 24 CI 已完成。
 2. `coarena@0.1.0` npm 发布与公开包验证已完成。
-3. `magpie-plugin` 自动发现 topic 已启用，Magpie registry PR #1122 已提交；合并、市场实际显示和真实宿主联调等待后续确认。
+3. Magpie registry PR #1122 已提交，维护者因第三方中转服务政策关闭，未获收录；按包名安装仍可用。
 
 登录令牌和真实 Coarena Key 不写入命令参数、仓库或本文。真实 Magpie / OpenCode 宿主及 Coarena 端到端结果仍以 [VALIDATION.md](VALIDATION.md) 的边界为准。

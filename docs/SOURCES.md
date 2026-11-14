@@ -110,3 +110,9 @@ River是API Key与简单provider最接近的完整工程样本；不是Coarena�
 - 公开读取 Magpie 社区 [README / The market](https://github.com/magpie-community/plugins/blob/9bca17b5d22507d0a901e45002936367a0875b85/README.md#the-market) 与 [registry 校验器](https://github.com/magpie-community/plugins/blob/9bca17b5d22507d0a901e45002936367a0875b85/scripts/registry.mjs)，确认独立 npm 包可仅以 registry 条目提交 PR，无需把实现迁入社区 monorepo。提供商条目省略 `kind`；`community` 徽章和替换内置订阅均不申请。
 - 官方流程要求可安装的 npm 包；本次先发布 npm，再创建实际收录 PR。GitHub `magpie-plugin` topic 的自动发现不等于 registry 审核通过，分别记录。
 - 新增 GitHub CI 与持久化实际打包检查；首次源码推送后 Node 22 / 24 CI 均成功。发布认证由 npm 官方交互登录处理，未把 Token 或 Coarena Key 写入仓库。
+
+## 2026-11-14 Magpie 收录政策反馈
+
+- [维护者 yetone 在 PR #1122 的回复](https://github.com/magpie-community/plugins/pull/1122#issuecomment-6871683565) 将 Coarena 定义为通过一个 Key 提供其他实验室模型的第三方中转服务，说明 registry 暂不直接收录此类提供商，未来将有相关合作方案，并关闭 PR。
+- 影响：通用外部 npm 插件提交文档与 schema 校验通过，并不足以代表服务类别符合人工收录政策。以本次维护者的直接反馈为准，记录为“已提交、因政策关闭、未收录”。
+- 调整：保留独立 GitHub / npm 分发及按名称安装；不重新打开 PR 或改换分类规避该政策。维护者明确确认 `magpie plugin add coarena` 仍可使用；本次未进行真实宿主安装或推理验收。
