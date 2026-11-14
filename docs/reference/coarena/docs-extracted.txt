@@ -1,0 +1,145 @@
+
+FreeModel APIAPI keys to call any Coarena model from your own code.Get a key
+Coarena by CoastyCoarenaby Coasty
+LeaderboardModel API
+Benchmarks
+Blog
+Coarenaby Coasty
+Arena
+Play
+Leaderboard
+Benchmarks
+Computer Use Arena
+Phone Use Arena
+CUA KnowledgeBench
+Compare models
+Models
+Docs
+Evidence
+Dataset
+Methodology
+CUA SafetyBench
+Metrics API
+Cite us
+About
+Mission
+Governance
+Blog
+Legal
+Terms
+Privacy
+Security
+Subprocessors
+Copyright © 2026 Coasty Systems, Inc. All rights reserved.
+oarena
+oarena
+Quick start
+Base URLs
+Models
+Feedback
+Limits
+Asking for more
+Errors
+Everything by API
+For agents
+API reference
+Model API
+Call any Coarena model from your own code. Free: $5 a day, and Coarena pays.
+Quick start
+1Get a key Create one on your API page. Free, no card.
+2Set the base URL https://coarena.ai/api/v1 for OpenAI SDKs, https://coarena.ai/api for Anthropic's.
+3Call Any model id from the list, as the model.
+Call a modelCopyCopiedSelect itcurl https://coarena.ai/api/v1/chat/completions \
+  -H "Authorization: Bearer $COARENA_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model": "claude-fable-5",
+       "messages": [{"role": "user", "content": "Hello"}]}'
+Copy for your agentCopiedSelect itGet a key
+Base URLs
+One key, two base URLs: every model answers on both.
+EnvironmentCopyCopiedSelect it# OpenAI SDKs, Codex, LangChain
+export OPENAI_BASE_URL=https://coarena.ai/api/v1
+export OPENAI_API_KEY=$COARENA_API_KEY
+# Anthropic SDK, Claude Code
+export ANTHROPIC_BASE_URL=https://coarena.ai/api
+export ANTHROPIC_AUTH_TOKEN=$COARENA_API_KEY
+Models
+22 models today. Send any id as the model; the list needs no key.
+List the modelsCopyCopiedSelect itcurl https://coarena.ai/api/v1/models
+All 22 model idsclaude-fable-5
+claude-fable-5-1
+claude-fable-5-2
+claude-haiku-5-5
+claude-opus-5-5
+claude-sonnet-5-5
+deepseek-v4-1-flash-1017
+gemini-3-8-flash
+gemini-4-argon
+gemini-4-carbon
+glm-5-3-flash
+gpt-6-1-sol
+gpt-6-1-terra
+gpt-6-astra
+gpt-6-luna
+grok-4-7
+hy4
+kimi-k3
+kimi-k3-1-pro
+mimo-v2-6-pro
+minimax-m3-1-flash
+qwen3-8-2-4t-a95b
+Feedback
+Rate any reply up or down by the id it came with, and say why: tags (correct, helpful, fast, wrong, unhelpful, refused, too_slow, bad_format, unsafe, concise, thorough, creative, good_code, followed_instructions, made_up, incomplete, too_long, off_topic, bad_code, ignored_instructions) and a note of up to 2,000 characters. null takes the rating away.
+Rate a replyCopyCopiedSelect itcurl https://coarena.ai/api/v1/feedback \
+  -H "Authorization: Bearer $COARENA_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"request_id":"<reply id>","rating":"up"}'
+# Python (openai), after reply = client.chat.completions.create(…)
+client.post("/feedback",
+            body={"request_id": reply.id, "rating": "up"}, cast_to=object)
+Limits
+Free: $5 of model use a day, and Coarena pays. 30 requests a minute, 2 at once. An account may also have a daily request limit, set by Coarena.
+Today's use and your limitsCopyCopiedSelect itcurl https://coarena.ai/api/v1/limits \
+  -H "Authorization: Bearer $COARENA_API_KEY"
+Asking for more
+One call, after your first one. With no field it asks for the next step up, $10 a day; name requests_per_minute (up to 600), or requests_per_day if your account has a daily request limit, to ask for those.
+Ask for higher limitsCopyCopiedSelect itcurl https://coarena.ai/api/v1/limits/requests \
+  -H "Authorization: Bearer $COARENA_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"usd_per_day":10}'
+# More a minute: -d '{"requests_per_minute":60}'
+# Where it stands: GET /api/v1/limits
+# Withdraw it: DELETE /api/v1/limits/requests/current
+Errors
+OpenAI routes answer in OpenAI's error shape, /v1/messages in Anthropic's. A limit 429 says exactly how to ask for more.
+The daily-limit 429CopyCopiedSelect it{
+  "error": {
+    "type": "insufficient_quota",
+    "code": "insufficient_quota",
+    "message": "Daily free limit reached: $5.00 of model usage today. …",
+    "limit_increase": {
+      "ask": {
+        "method": "POST",
+        "url": "https://coarena.ai/api/v1/limits/requests",
+        "body": {
+          "usd_per_day": 10
+        }
+      }
+    }
+  }
+}
+Everything by API
+Everything on your API page, with a key. Scopes and examples are in the API reference.
+WhatCall
+Call a modelPOST /api/v1/chat/completions, /responses or /messages
+List the modelsGET /api/v1/models
+Today's use and your limitsGET /api/v1/limits
+Ask for higher limitsPOST /api/v1/limits/requests
+Withdraw that askDELETE /api/v1/limits/requests/current
+Usage by day, model and keyGET /api/v1/usage
+Your requestsGET /api/v1/requests
+One requestGET /api/v1/requests/{id}
+Rate a replyPOST /api/v1/feedback
+Download requestsGET /api/v1/requests/export
+Your keysGET /api/v1/keys
+Rename or revoke this keyPATCH or DELETE /api/v1/key
