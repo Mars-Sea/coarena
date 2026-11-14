@@ -1,6 +1,6 @@
 # 实施计划与验证手册
 
-当前只交付需求和参考资料；本文件中的运行命令适用于未来代码完成以后。不要在没有 package.json / runtime 入口时声称插件可以安装。
+本文件保留 P0 的实施与验收要求；独立插件现已实现，实际代码与离线验证结果见 [VALIDATION.md](VALIDATION.md)。本地安装方法以 [README](../README.md) 为准；下列真实宿主 / Key 步骤仍待具备环境后执行。
 
 ## M1：独立包与加载入口
 
@@ -73,18 +73,9 @@ magpie quota coarena --json
 
 ### OpenCode
 
-已发布npm包后，配置示例：
+2026-11-14 复核官方文档后，安装说明按版本拆分：v1 的 npm 配置键为 `plugin`，本地支持 `.opencode/plugins/*.js` 包装文件；v2 的配置键为 `plugins`，本地项为包目录。具体可复制示例见 [README](../README.md)。包尚未发布 npm，不应尝试从 registry 安装拟定包名。
 
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "plugin": ["opencode-coarena-auth"]
-}
-```
-
-随后按安装版本运行 `opencode auth login`，选择Coarena，测试 `coarena/<live-model-id>`。包名仅为拟定示例，在发布前此配置不能从npm安装。
-
-本地包加载方式和1.x/2.x命令可能随版本变化；本次没有验证可通用的本地目录语法。实施者应读取所装OpenCode版本的官方文档，用独立配置目录完成本地加载，再将实际可运行的路径 / 文件入口写回README；不要把Magpie的add命令套用到OpenCode。
+在独立测试配置中加载后，v1 可按安装版本执行 `opencode auth login`；v2 使用当前 provider / connection 交互，命令和菜单以安装版本为准。选择 Coarena，测试 `coarena/<live-model-id>`。没有 CLI 环境，以上仍为基于官方文档的复现步骤，不是实机结论。
 
 OpenCode 2.x至少验证provider注册、API auth和转换后的模型能力；不能因default.setup存在就认定实际宿主可用。Magpie usage卡片不在OpenCode验收范围。
 
@@ -101,6 +92,7 @@ OpenCode 2.x至少验证provider注册、API auth和转换后的模型能力；�
 ```sh
 bun test
 bun run check
+npm run check:node
 npm pack --dry-run
 ```
 
@@ -113,7 +105,7 @@ npm pack --dry-run
 - README包含安装、创建Key、登录、模型选择、额度语义、宿主差异、故障处理、服务端留存事实。
 - 引用MIT源码保留归属；新代码许可证最终一致。不要把Coarena公开内容误当作MIT许可。
 - 写入 `docs/VALIDATION.md`：OS、Bun/Node、宿主版本、命令与结果、真实接口覆盖、未测项、适配器来源。
-- 不自动发布npm、推送远程、上架市场。代码交付与分发分别记录。
+- 默认不发布 npm、推送远程或上架市场。2026-11-14 用户已明确授权创建 GitHub 仓库、npm 发布并向 Magpie 提交；此分发阶段与代码离线交付分别记录，实际状态见 [DISTRIBUTION.md](DISTRIBUTION.md)。
 
 ## 可供测试使用的最小hook样例
 

@@ -1,8 +1,6 @@
-.DS_Store
 node_modules/
+*.tgz
 .env
 .env.*
-!.env.example
-*.tgz
+.DS_Store
 coverage/
-.tmp/

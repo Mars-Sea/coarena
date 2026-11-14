@@ -8,7 +8,8 @@
 
 ```json
 {
-  "name": "opencode-coarena-auth",
+  "name": "coarena",
+  "magpie": { "name": "Coarena" },
   "version": "0.1.0",
   "description": "Coarena Model API provider for Magpie and OpenCode",
   "type": "module",
@@ -28,6 +29,8 @@
 ```
 
 按实际拆分添加 runtime 模块到 files；不把 docs/reference 打入 npm。repository 字段在远程地址确定后填写，不复制原项目的 repository.directory。不需要在本仓库创建 packages/coarena 或 workspaces。
+
+Magpie 的插件列表与详情页从实际 `package.json` 的 `magpie.icon` 读取图标，提供商页则读取 `auth.icon`；详情页不会从提供商图标自动回退。实际清单的 `magpie.icon` 与 `auth.icon` 均使用 `assets/coarena.svg` 的完整图片 data URI，避免依赖图片网络请求；结构检查核对二者与资源一致。上面的最小元数据示例省略图标内容。
 
 ## 2. 插件模块与三个 hook
 

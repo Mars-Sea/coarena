@@ -73,7 +73,7 @@ River是API Key与简单provider最接近的完整工程样本；不是Coarena�
 - 社区插件源码保留其MIT许可证和归属。
 - Magpie源码与文档保留其MIT许可证和归属。
 - Coarena公开资料版权归原权利方；本仓库不另行授予MIT许可，不暗示已获得品牌或分发授权。公开API响应仅用于字段参考。
-- 本次未为未来新实现定下最终根许可证；PLUGIN-CONTRACT的MIT package.json是拟定示例，实施阶段需让根LICENSE与最终包元数据一致。
+- 新实现与完整桥接使用根 [LICENSE](../LICENSE) 的 MIT 许可，package.json 与之保持一致；Coarena 元数据明确排除在该授权之外。
 
 ## 后续必须明确报告的验证空白
 
@@ -83,4 +83,23 @@ River是API Key与简单provider最接近的完整工程样本；不是Coarena�
 4. 非零价格单位、未知capabilities和未来模型分页。
 5. npm包名可用性、远程仓库地址、是否上架社区市场。
 
-这些空白不阻止从需求进入离线开发，但在获得证据前不能写成“已验证”。
+这些空白不阻止从需求进入离线开发，但在获得证据前不能写成“已验证”。实施后的覆盖结果以 [VALIDATION.md](VALIDATION.md) 为准；SDK 的本地序列化已测不代表真实服务或宿主路径已测。
+
+## 2026-11-14 实施复核与调整
+
+- 重新公开 GET `https://coarena.ai/api/v1/models`，HTTP 200，20 条模型，`has_more:false`；重新 GET OpenAPI，HTTP 200，`info.version:2026-11-02`。未读取受保护接口，既有 `docs/reference` 快照保持不变。
+- 读取 [OpenCode v2 Plugins](https://opencode.ai/docs/plugins/)：当前配置键为 `plugins`，接受本地目录，单文件路径会跳过；相对路径基于配置文件。读取 [OpenCode v1 Plugins](https://opencode.ai/v1/docs/plugins/)：npm 配置键为 `plugin`，可从 `.opencode/plugins/` 加载本地 `.js` / `.ts`。影响：交接文件中统一使用单数的示例仅适用于 v1，README 和实施计划已按版本修正；未改变插件 P0 范围。页面未给固定宿主版本，本次无真实 CLI。
+- OpenCode 2 桥接继续以归档的完整 MIT 版本为基线：补上无 Key 的公共目录发现、启动等待首次发现、有效空目录替换、回退标记保留、凭据指纹与卸载取消；Request 分支改为流式转发并保留 init / 代理选项，避免 `req.text()` 缓冲。SDK package 标记保留快照版本 `2.0.41`；限额未知时的 128000 / 8192 仅为桥接默认。
+- 使用开发依赖 `@ai-sdk/openai-compatible@2.0.41` 与本地合成 HTTP 验证 Chat、SSE、工具、多轮、图片、取消和错误；不解析或改写推理 SSE。宿主变体序列化仍缺证据，所以 `efforts` 仅作元数据，`variants:{}`。
+- Bun 1.4.4 的 `new Request(url,{credentials:"omit"})` 返回 `credentials:"include"`，Node 24.22.3 则返回 `omit`。Bun 测试核对转发保持原 Request 的实际属性；Node 检查额外断言 `omit`、stream、init 覆盖与取消。此差异不被宣称为宿主代理兼容证明。
+
+## 2026-11-14 图标与语言补充
+
+- 从官网首页确认图标链接，公开 GET `https://coarena.ai/icon.svg?icon.0lfastlo0uy2w.svg`，原始字节保存为 `assets/coarena.svg`。通过 `auth.icon` 以内嵌 data URI 提交，保持导入与显示无需联网；官网标识仍归原权利方，不纳入插件 MIT 授权。
+- 重新读取 `https://raw.githubusercontent.com/yetone/magpie/master/internal/plugin/host.js`，与归档固定版本逐字节一致，SHA-256 为 `1d5ad0d2ff9c23739e79239d915e6f5921134cae170a451b8c8a820d6ec31589`。`iconOf` 接受 `auth.icon` 的图片 data URI；`methods` 支持 `labels`，`optionsOf` 支持开关的多语言标签；`usageOf` 仅传 `{signal}`，只复制卡片字符串，未传界面语言、未读取卡片多语言映射。
+- 影响与调整：新增 `english_usage` 开关（默认关闭），卡片默认简体中文、可切英文；不声称自动跟随宿主语言。成功读取缓存独立于展示语言，切换时重新渲染，不额外读取接口；错误码及安全服务消息保留原文。此变更补充显示行为，不扩展推理协议或受保护操作范围。真实 Magpie 图标与开关渲染仍未验收。
+
+## 2026-11-14 插件详情图标修正
+
+- 用户截图显示插件详情头部采用默认拼图，但提供商等页面显示图标。公开读取 [Magpie market.go](https://github.com/yetone/magpie/blob/master/internal/plugin/market.go) 与 [plugins.js](https://github.com/yetone/magpie/blob/master/internal/gui/assets/plugins.js)：`InstalledIcon` 从安装目录的 `package.json.magpie.icon` 读取；`ownIcon` 接受 https 或图片 data URI，长度不超过 `3 << 19`；`installedRow` 为详情传入 `e.icon`，`detail` 只从 `l.icon || l.npm?.icon` 取图，不从提供商回退，缺省绘制拼图。
+- 影响与调整：先前仅设置 `auth.icon` 无法覆盖插件详情；补上 `magpie.icon` 的相同内嵌 SVG，并以结构检查保证包元数据、认证 hook 与官网资源一致。不修改宿主或其他仓库；不依赖远程图片。源码用于核对行为，未复制进本仓库运行入口。

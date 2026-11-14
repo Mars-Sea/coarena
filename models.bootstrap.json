@@ -1,0 +1,488 @@
+{
+  "source": "https://coarena.ai/api/v1/models",
+  "capturedAt": "2026-11-14",
+  "notice": "Public API metadata; rights remain with the original rights holders. This is a dated fallback, not a live catalog.",
+  "models": {
+    "claude-fable-5": {
+      "id": "claude-fable-5",
+      "name": "Claude Fable 5",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-09-21"
+    },
+    "claude-fable-5-1": {
+      "id": "claude-fable-5-1",
+      "name": "Claude Fable 5.1",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-09-21"
+    },
+    "claude-fable-5-2": {
+      "id": "claude-fable-5-2",
+      "name": "Claude Fable 5.2",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-11-09"
+    },
+    "claude-haiku-5-5": {
+      "id": "claude-haiku-5-5",
+      "name": "Claude Haiku 5.5",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-10-21"
+    },
+    "claude-opus-5-5": {
+      "id": "claude-opus-5-5",
+      "name": "Claude Opus 5.5",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-09-22"
+    },
+    "claude-sonnet-5-5": {
+      "id": "claude-sonnet-5-5",
+      "name": "Claude Sonnet 5.5",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-09-29"
+    },
+    "deepseek-v4-1-flash-1017": {
+      "id": "deepseek-v4-1-flash-1017",
+      "name": "DeepSeek V4.1 Flash 1017",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "none",
+        "high",
+        "max"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-11-05"
+    },
+    "gemini-3-8-flash": {
+      "id": "gemini-3-8-flash",
+      "name": "Gemini 3.8 Flash",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "max"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-09-21"
+    },
+    "gemini-4-argon": {
+      "id": "gemini-4-argon",
+      "name": "Gemini 4 Argon",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "max"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-10-22"
+    },
+    "gemini-4-carbon": {
+      "id": "gemini-4-carbon",
+      "name": "Gemini 4 Carbon",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "max"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-11-10"
+    },
+    "glm-5-3-flash": {
+      "id": "glm-5-3-flash",
+      "name": "GLM 5.3 Flash",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-09-21"
+    },
+    "gpt-6-1-sol": {
+      "id": "gpt-6-1-sol",
+      "name": "GPT-6.1 Sol",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-09-29"
+    },
+    "gpt-6-1-terra": {
+      "id": "gpt-6-1-terra",
+      "name": "GPT-6.1 Terra",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "none",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-10-26"
+    },
+    "gpt-6-astra": {
+      "id": "gpt-6-astra",
+      "name": "GPT-6 Astra",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-09-21"
+    },
+    "gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "name": "GPT-6 Luna",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "none",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-09-29"
+    },
+    "grok-4-7": {
+      "id": "grok-4-7",
+      "name": "Grok 4.7",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-09-21"
+    },
+    "hy4": {
+      "id": "hy4",
+      "name": "Hy4",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-11-05"
+    },
+    "kimi-k3-1-pro": {
+      "id": "kimi-k3-1-pro",
+      "name": "Kimi K3.1 Pro",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "low",
+        "high"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-10-24"
+    },
+    "mimo-v2-6-pro": {
+      "id": "mimo-v2-6-pro",
+      "name": "MiMo V2.6 Pro",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-10-02"
+    },
+    "minimax-m3-1-flash": {
+      "id": "minimax-m3-1-flash",
+      "name": "MiniMax M3.1 Flash",
+      "status": "active",
+      "limit": {
+        "context": 128000,
+        "input": 128000,
+        "output": 16384
+      },
+      "image": true,
+      "tools": true,
+      "reasoning": true,
+      "efforts": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "release_date": "2026-11-05"
+    }
+  }
+}

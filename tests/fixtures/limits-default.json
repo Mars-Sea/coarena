@@ -1,0 +1,18 @@
+{
+  "_fixture": "Synthetic account response based on the OpenAPI description; never a real account capture",
+  "data": {
+    "free": true,
+    "usd_per_day": 5,
+    "default_usd_per_day": 5,
+    "source": "default",
+    "granted_until": null,
+    "requests_per_minute_key": 30,
+    "requests_per_minute_account": 30,
+    "requests_per_minute_model": 30,
+    "requests_per_day": null,
+    "concurrency": 2,
+    "today": { "used_usd": 1.2, "held_usd": 0.3, "left_usd": 3.5, "requests": 12, "requests_left": null, "resets_at": 1794700800000 },
+    "request": null,
+    "can_ask": true
+  }
+}

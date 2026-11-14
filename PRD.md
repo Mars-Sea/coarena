@@ -1,4 +1,4 @@
-# Coarena Provider 插件 PRD
+# Coarena PRD
 
 版本：1.0 · 状态：Ready for implementation · 调研日期：2026-11-14
 
@@ -54,8 +54,8 @@ Coarena 提供一个 API Key 访问多个厂商模型的 Model API，支持 Open
 | 项目 | 决策 | 理由 |
 | --- | --- | --- |
 | Provider ID | `coarena` | 稳定、独立，不冒充 OpenAI / Anthropic |
-| 显示名 | `Coarena` | 与服务品牌一致 |
-| 包名 | 暂定 `opencode-coarena-auth` | 独立维护，不假定拥有 `@magpie-community` 发布权限；发布前检查可用性 |
+| 插件名称 | `Coarena` | 用户指定，与服务品牌一致 |
+| 包名 | `coarena` | npm 包名使用小写；独立维护，发布前检查可用性 |
 | 语言与运行形式 | ESM JavaScript，`.mjs` | 与现有同类插件一致，避免首版编译链 |
 | 默认推理协议 | `@ai-sdk/openai-compatible` | 全部模型使用一个兼容入口；减少路由和鉴权差异 |
 | 推理基址 | `https://coarena.ai/api/v1` | SDK 在其后附加 `/chat/completions` |

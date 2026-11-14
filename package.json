@@ -1,0 +1,63 @@
+{
+  "name": "coarena",
+  "magpie": {
+    "name": "Coarena",
+    "summary": {
+      "en": "Use Coarena models in Magpie and OpenCode, with API key sign-in and daily usage cards in Magpie.",
+      "zh": "在 Magpie 和 OpenCode 使用 Coarena 模型，支持 API Key 登录及 Magpie 每日额度卡片。"
+    },
+    "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPCEtLSBGYXZpY29uIGN1dCBvZiB0aGUgQ29hcmVuYSBtYXJrOiBldmVyeSBlZGdlIHNpdHMgb24gZXZlbiB2aWV3Qm94IHVuaXRzCiAgICAgICBzbyBhIDE2cHggcmFzdGVyIGxhbmRzIG9uIHdob2xlIHBpeGVscyAoMXB4ID0gMiB1bml0cykuIC0tPgogIDxzdHlsZT4KICAgIHBhdGggeyBmaWxsOiAjMDkwOTBiIH0KICAgIEBtZWRpYSAocHJlZmVycy1jb2xvci1zY2hlbWU6IGRhcmspIHsgcGF0aCB7IGZpbGw6ICNmYWZhZmEgfSB9CiAgPC9zdHlsZT4KICA8cGF0aCBkPSJNMjkuNDE2IDEyQTE0IDE0IDAgMSAwIDI5LjQxNiAyMEwyNC4wNjIgMjBBOSA5IDAgMSAxIDI0LjA2MiAxMloiLz4KICA8cGF0aCBkPSJNMTUgMTBoMmExIDEgMCAwIDEgMSAxdjJhMSAxIDAgMCAxLTEgMWgtMmExIDEgMCAwIDEtMS0xdi0yYTEgMSAwIDAgMSAxLTFaIi8+CiAgPHBhdGggZD0iTTE1IDE4aDJhMSAxIDAgMCAxIDEgMXYyYTEgMSAwIDAgMS0xIDFoLTJhMSAxIDAgMCAxLTEtMXYtMmExIDEgMCAwIDEgMS0xWiIvPgo8L3N2Zz4K"
+  },
+  "version": "0.1.0",
+  "description": "Coarena Model API provider for Magpie and OpenCode",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mars-Sea/coarena.git"
+  },
+  "homepage": "https://github.com/Mars-Sea/coarena#readme",
+  "bugs": { "url": "https://github.com/Mars-Sea/coarena/issues" },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "type": "module",
+  "main": "./opencode.mjs",
+  "exports": {
+    ".": "./opencode2.mjs"
+  },
+  "files": [
+    "index.mjs",
+    "models.mjs",
+    "usage.mjs",
+    "words.mjs",
+    "assets/coarena.svg",
+    "http.mjs",
+    "opencode.mjs",
+    "opencode2.mjs",
+    "models.bootstrap.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "bun test",
+    "check": "bun scripts/check.mjs",
+    "check:node": "node scripts/check-node.mjs",
+    "check:package": "node scripts/check-package.mjs",
+    "prepublishOnly": "bun test && npm run check:node && npm run check:package",
+    "bootstrap": "bun scripts/bootstrap.mjs"
+  },
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "magpie",
+    "magpie-plugin",
+    "coarena"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@ai-sdk/openai-compatible": "2.0.41"
+  }
+}
