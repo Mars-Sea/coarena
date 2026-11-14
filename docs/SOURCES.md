@@ -103,3 +103,10 @@ River是API Key与简单provider最接近的完整工程样本；不是Coarena�
 
 - 用户截图显示插件详情头部采用默认拼图，但提供商等页面显示图标。公开读取 [Magpie market.go](https://github.com/yetone/magpie/blob/master/internal/plugin/market.go) 与 [plugins.js](https://github.com/yetone/magpie/blob/master/internal/gui/assets/plugins.js)：`InstalledIcon` 从安装目录的 `package.json.magpie.icon` 读取；`ownIcon` 接受 https 或图片 data URI，长度不超过 `3 << 19`；`installedRow` 为详情传入 `e.icon`，`detail` 只从 `l.icon || l.npm?.icon` 取图，不从提供商回退，缺省绘制拼图。
 - 影响与调整：先前仅设置 `auth.icon` 无法覆盖插件详情；补上 `magpie.icon` 的相同内嵌 SVG，并以结构检查保证包元数据、认证 hook 与官网资源一致。不修改宿主或其他仓库；不依赖远程图片。源码用于核对行为，未复制进本仓库运行入口。
+
+## 2026-11-14 分发授权与官方流程复核
+
+- 用户明确要求创建 GitHub 仓库、npm 发布并向 Magpie 提交，覆盖此前默认不分发的边界；不改变真实推理或额度操作范围。实际结果单独记于 [DISTRIBUTION.md](DISTRIBUTION.md)。
+- 公开读取 Magpie 社区 [README / The market](https://github.com/magpie-community/plugins/blob/9bca17b5d22507d0a901e45002936367a0875b85/README.md#the-market) 与 [registry 校验器](https://github.com/magpie-community/plugins/blob/9bca17b5d22507d0a901e45002936367a0875b85/scripts/registry.mjs)，确认独立 npm 包可仅以 registry 条目提交 PR，无需把实现迁入社区 monorepo。提供商条目省略 `kind`；`community` 徽章和替换内置订阅均不申请。
+- 官方流程要求可安装的 npm 包；本次先发布 npm，再创建实际收录 PR。GitHub `magpie-plugin` topic 的自动发现不等于 registry 审核通过，分别记录。
+- 新增 GitHub CI 与持久化实际打包检查；首次源码推送后 Node 22 / 24 CI 均成功。发布认证由 npm 官方交互登录处理，未把 Token 或 Coarena Key 写入仓库。

@@ -12,7 +12,7 @@
 | Bun | 1.4.4 (`38afee6c8`) |
 | Node | v24.22.3 |
 | npm | 12.2.2 |
-| 声明的 Node 最低版本 | 22；本次未在 Node 22 单独执行 |
+| 声明的 Node 最低版本 | 22；本地 Node 24.22.3，GitHub CI 已通过 Node 22 / 24 |
 | 测试 SDK | `@ai-sdk/openai-compatible@2.0.41`，仅开发依赖 |
 | SDK 子依赖 | `@ai-sdk/provider@3.0.8`、`@ai-sdk/provider-utils@4.0.23`；精确树见 package-lock.json |
 | Magpie CLI / App | CLI 不在 PATH；未启动 App，版本未知 |
