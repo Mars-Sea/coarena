@@ -1,7 +1,7 @@
 Add the independently maintained **Coarena** provider to the plugin registry.
 
 - Source: https://github.com/Mars-Sea/coarena
-- npm: https://www.npmjs.com/package/coarena (`0.1.0`; publish and verify before submitting this draft)
+- npm: https://www.npmjs.com/package/coarena (`0.1.0`, published and public tarball verified)
 - Provider ID: `coarena`
 - Authentication: a Coarena API key stored by the host.
 - Public model discovery, Chat Completions, tool/image capability mapping, and daily USD/request usage with per-account caches.
@@ -13,8 +13,8 @@ The registry change appends one provider entry with English/Chinese summaries an
 Validation:
 
 - 68 offline tests pass, including the actual OpenAI-compatible SDK against a local synthetic HTTP server for Chat, SSE, tools, images and cancellation.
-- Node 22 and 24 CI passes: https://github.com/Mars-Sea/coarena/actions/runs/43553589358
-- The actual 12-file tarball loads both entries without node_modules or network, including model bootstrap, icons and language selection.
+- Node 22 and 24 CI passes: https://github.com/Mars-Sea/coarena/actions/runs/43556261083
+- The public npm tarball contains 12 files and loads both entries without node_modules or network, including model bootstrap, icons and language selection. Its SHA-1 is `d0871439b21b6f9d0a8da317085aafd250861f76`, matching the published registry metadata.
 - The appended registry passes upstream `registryProblems`; existing entries are preserved.
 - Real Coarena inference, protected limits and Magpie/OpenCode end-to-end acceptance remain unverified. Scope and evidence: https://github.com/Mars-Sea/coarena/blob/main/docs/VALIDATION.md
 

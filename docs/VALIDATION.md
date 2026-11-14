@@ -30,6 +30,8 @@
 | `npm run check:node` | 通过 | Node 双入口和 config；Request stream、credentials、init 覆盖、URL 重映射、已消费 body 替换、代理选项与取消 |
 | `npm pack --dry-run --json` | 通过，12 个文件 | 最终 npm 清单含 SVG 与语言模块；无 docs/reference、测试、node_modules、.env、凭据或宿主配置 |
 | `npm run check:package` | 通过，12 个文件 | 持久化的实际打包 / 解包脚本；临时目录无 node_modules，禁用网络仍可加载双入口、模型、图标、中英文切换 |
+| 公开 npm tarball 下载验证 | 通过 | 实际 `coarena@0.1.0` 的哈希、源码版本、12 文件、双入口、图标与语言一致，详见 DISTRIBUTION.md |
+| GitHub CI Node 22 / 24 | 通过 | 发布源码 `4c9d7eb` 的两个 Linux job 均成功 |
 | `git diff --check` | 通过 | 已跟踪文档无空白错误 |
 | 归档 SHA-256 校验 | 15 个文件全部一致 | docs/reference 内容未被修改 |
 | `npm audit --omit=dev --json` | 0 个生产依赖审计项 | 包无生产依赖 |
