@@ -4,7 +4,7 @@
 
 为 **Magpie、OpenCode 1.x 和 OpenCode 2.x** 接入 Coarena Model API 的独立插件。Provider ID 为 `coarena`，首版使用 OpenAI Chat Completions 兼容协议，基址为 `https://coarena.ai/api/v1`。
 
-**当前状态：0.1.0 的 P0 代码与离线验证已完成，真实账号和宿主验收尚未完成。** 源码仓库：[Mars-Sea/coarena](https://github.com/Mars-Sea/coarena)。npm 首次发布准备中；Magpie 市场收录尚未完成。详细结果见 [验证报告](https://github.com/Mars-Sea/coarena/blob/main/docs/VALIDATION.md)。
+**当前状态：0.1.0 的 P0 代码与离线验证已完成，真实账号和宿主验收尚未完成。** 源码仓库：[Mars-Sea/coarena](https://github.com/Mars-Sea/coarena)，npm 包：[`coarena`](https://www.npmjs.com/package/coarena)。Magpie 收录进度见 [分发记录](https://github.com/Mars-Sea/coarena/blob/main/docs/DISTRIBUTION.md)，验证边界见 [验证报告](https://github.com/Mars-Sea/coarena/blob/main/docs/VALIDATION.md)。
 
 支持宿主保存 API Key、公开动态模型目录、工具与图片能力映射，以及 Magpie 的每日美元额度与请求次数显示。普通请求和流式响应交给宿主的 OpenAI Compatible SDK；插件不自行解析 SSE。Responses、Anthropic 原生协议、提额、评价和历史查询留待后续版本。
 
@@ -12,17 +12,17 @@ Coarena 官方 OpenAPI 说明：**服务端会保存提示词和响应，即使�
 
 ## 安装
 
-运行环境为 Node.js 22+ 或兼容的 Bun；插件没有生产依赖。安装宿主后，请先用当前版本的 `--help` 核对命令；以下方式基于宿主文档，尚未在真实 CLI 中执行。npm 包发布前可从 GitHub 安装；下方 npm 示例仅在 `coarena` 发布后可用。
+运行环境为 Node.js 22+ 或兼容的 Bun；插件没有生产依赖。安装宿主后，请先用当前版本的 `--help` 核对命令；以下方式基于宿主文档，尚未在真实 CLI 中执行。可使用 npm 包安装，或从 GitHub 加载源码。
 
 ### Magpie
 
 ```sh
-magpie plugin add github:Mars-Sea/coarena
+magpie plugin add coarena
 magpie plugin login coarena
 magpie quota coarena --json
 ```
 
-npm 发布后也可使用 `magpie plugin add coarena`。
+也可使用 `magpie plugin add github:Mars-Sea/coarena` 从 GitHub 安装。
 
 在 [Coarena API 页面](https://coarena.ai/account/api) 创建 Key，在登录交互中选择 `Coarena API key` 并粘贴。Key 由宿主保存，本插件不创建自己的凭据文件。选择 `coarena/<模型ID>` 开始对话；模型 ID 以当前公开目录为准。首次加载时无需 Key 也能发现目录。
 
@@ -30,7 +30,7 @@ npm 发布后也可使用 `magpie plugin add coarena`。
 
 ### OpenCode 1.x
 
-npm 发布后，在 `opencode.json` 使用 v1 的单数 `plugin`：
+在 `opencode.json` 使用 v1 的单数 `plugin`：
 
 ```json
 { "plugin": ["coarena"] }
@@ -46,7 +46,7 @@ export { CoarenaPlugin } from "file:///absolute/path/to/coarena/opencode.mjs"
 
 ### OpenCode 2.x
 
-2026-11-14 复核的官方 v2 文档使用复数 **`plugins`**。npm 发布后可配置为：
+2026-11-14 复核的官方 v2 文档使用复数 **`plugins`**，可配置为：
 
 ```json
 { "plugins": ["coarena"] }
