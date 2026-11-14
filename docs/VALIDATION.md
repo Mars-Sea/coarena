@@ -1,6 +1,6 @@
 # 实施验证报告
 
-验证日期：2026-11-14。插件：**Coarena**，本次工作树版本：`coarena@0.1.1`；npm 可信发布结果单独记录于分发记录。
+验证日期：2026-11-14。插件：**Coarena**，版本：`coarena@0.1.1`，已通过 GitHub OIDC 发布至 npm。
 
 **结论：P0 的 M1–M5 实现与对应离线项已完成；真实 Coarena 账号和 Magpie / OpenCode 宿主端到端验收未验证。** GitHub / npm / Magpie 分发进度单独记录于 [DISTRIBUTION.md](DISTRIBUTION.md)。没有读取真实 Coarena Key，也没有发送真实推理、额度申请或反馈请求。
 
@@ -30,8 +30,11 @@
 | `npm run check:node` | 通过 | Node 双入口和 config；Request stream、credentials、init 覆盖、URL 重映射、已消费 body 替换、代理选项与取消 |
 | `npm pack --dry-run --json` | 通过，12 个文件 | 最终 npm 清单含 SVG 与语言模块；无 docs/reference、测试、node_modules、.env、凭据或宿主配置 |
 | `npm run check:package` | 通过，12 个文件 | 持久化的实际打包 / 解包脚本；临时目录无 node_modules，禁用网络仍可加载双入口、模型、图标、中英文切换 |
-| 公开 npm tarball 下载验证 | 通过 | 实际 `coarena@0.1.0` 的哈希、源码版本、12 文件、双入口、图标与语言一致，详见 DISTRIBUTION.md |
-| GitHub CI Node 22 / 24 | 通过 | 发布源码 `4c9d7eb` 的两个 Linux job 均成功 |
+| 公开 npm tarball 下载验证 | 通过 | 实际 `coarena@0.1.1` 的哈希、源码版本、12 文件、双入口、图标与语言一致，详见 DISTRIBUTION.md |
+| GitHub CI Node 22 / 24 | 通过 | 发布源码 `9bbfc43` 的两个 Linux job 均成功 |
+| Publish npm 手动演练 | 通过 | run 43558399034，validate 成功，publish 按预期跳过 |
+| GitHub OIDC 实际发布 | 通过 | run 43559393942 的 validate / publish / 公开包校验成功，`latest` 为 0.1.1；npm 公开 publisher 为 GitHub Actions / github |
+| 公开 provenance 身份核对 | 通过 | SLSA v1 的仓库、workflow、tag、源码 SHA 与 CI invocation 均匹配；未另行执行完整 Sigstore 密码学验证 |
 | `node scripts/check-release.mjs` | 通过，手动演练模式 | 稳定版本、仓库元数据、锁文件一致性；无发布动作 |
 | actionlint 1.7.12 | 通过 | validate.yml 与 publish.yml 的静态语法 / 表达式检查 |
 | `git diff --check` | 通过 | 已跟踪文档无空白错误 |

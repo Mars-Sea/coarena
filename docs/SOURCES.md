@@ -122,4 +122,4 @@ River是API Key与简单provider最接近的完整工程样本；不是Coarena�
 - 用户要求创建 GitHub npm 可信 CI 发布。完整阅读 [npm Trusted Publishers](https://docs.npmjs.com/trusted-publishers/) 官方页面，并复核本机 npm 12.2.2 的 `npm trust` 文档及 GitHub / list 命令实现。
 - 当前官方要求 npm >=11.5.1、Node >=22.14、GitHub-hosted runner 及 job 的 `id-token: write`；workflow 字段仅填写文件名，repo、workflow、environment 大小写须匹配。新绑定默认 stage-only，独立直接发布须显式 `--allow-publish`。公开仓库与包可自动生成 provenance。
 - 最新官方文档说明最多 10 个 trusted publishers；本机随 npm 附带的旧文档仍称最多一个，以最新官方文档为准。新绑定需在 2 天内首次成功发布，否则过期；首次成功后固定仓库身份。
-- 调整：固定 `Mars-Sea/coarena`、`publish.yml`、`npm` 环境，稳定 GitHub Release 触发实际发布，manual 仅 dry-run。以一次真实 `0.1.1` CI 发布验证绑定，而不是将保存配置视为成功。具体结果记录于分发文档；不添加长期 npm token，不改变真实 Coarena 推理 / limits 验收范围。
+- 调整：固定 `Mars-Sea/coarena`、`publish.yml`、`npm` 环境，稳定 GitHub Release 触发实际发布，manual 仅 dry-run。[首次实际 `0.1.1` CI 发布](https://github.com/Mars-Sea/coarena/actions/runs/43559393942) 已成功，公开 publisher 为 GitHub Actions / github，SLSA provenance 指向相同仓库、workflow、tag 和源码 SHA。具体结果记录于分发文档；不添加长期 npm token，不改变真实 Coarena 推理 / limits 验收范围。

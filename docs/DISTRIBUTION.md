@@ -7,11 +7,12 @@
 | 项目 | 地址 / 名称 | 状态 |
 | --- | --- | --- |
 | GitHub | https://github.com/Mars-Sea/coarena | 已创建公开仓库并推送 `main`；实现提交 `f6ec210` |
-| GitHub Release | [Coarena 0.1.0](https://github.com/Mars-Sea/coarena/releases/tag/v0.1.0) | 已发布，tag 指向 npm `gitHead` 对应的 `4c9d7eb` |
-| npm | [`coarena@0.1.0`](https://www.npmjs.com/package/coarena) | 已公开发布，`latest` 为 `0.1.0`；公开 tarball 下载与核验通过 |
+| GitHub Release | [Coarena 0.1.1](https://github.com/Mars-Sea/coarena/releases/tag/v0.1.1) | 已发布，tag 与 npm `gitHead` 均为 `9bbfc43` |
+| npm | [`coarena@0.1.1`](https://www.npmjs.com/package/coarena) | 已通过 GitHub OIDC 发布，`latest` 为 `0.1.1`；公开 tarball 与 provenance 核对通过 |
+| Trusted CI | [Publish npm 成功运行](https://github.com/Mars-Sea/coarena/actions/runs/43559393942) | validate / publish / 公开包校验均成功；未配置 npm token secret |
 | Magpie | [收录 PR #1122](https://github.com/magpie-community/plugins/pull/1122) | 已提交，维护者因第三方中转服务收录政策关闭；未合并，未获 registry 收录 |
 
-## 发布前验证
+## 0.1.0 首次发布前验证
 
 - `npm run prepublishOnly` 已通过：68 项离线测试、Node Request 检查、12 文件实际打包 / 解包检查。
 - `npm run check:package` 验证 tarball 无生产依赖、无 node_modules、无凭据与参考文档；在禁用网络的临时目录验证双入口、同一官网图标、中文默认及英文开关。
@@ -32,7 +33,7 @@
 
 维护者同时明确：包仍可通过 `magpie plugin add coarena` 按名称安装，暂停的是 registry listing。本次不重新打开或改换分类提交；后续收录需等待官方合作 / 政策变化。真实 CLI 安装与推理仍未实机验收。
 
-## npm 发布与公开安装包验证
+## 0.1.0 首次发布与公开安装包验证
 
 - npm 先提示首次发布处理中，公开 registry 暂时显示 `0.0.0-stage`；随后确认正式 `0.1.0` 可下载，`dist-tags.latest` 已指向 `0.1.0`，再提交 Magpie PR。
 - 版本源码：`4c9d7eb75623d81e47082829ca62c636a237a140`，与 npm `gitHead` 一致；[该提交 CI](https://github.com/Mars-Sea/coarena/actions/runs/43556261083) 的 Node 22 / 24 均通过。
@@ -41,7 +42,7 @@
 - Integrity：`sha512-urcSqZjqq8YBMhlqEALyDYmLK1UPmeF7y0uHzNRcd9A9H4dyoezz82IlZI6PNXbXxE1mMXeWwc5zowcF9oY5YA==`。
 - 公开包确为 12 个预期文件、没有生产依赖；在独立临时目录中禁用网络，加载双入口、bootstrap、同一图标、中英文卡片均通过。`main` 为 `./opencode.mjs`，`exports["."]` 为 `./opencode2.mjs`。
 
-## npm 可信 CI 发布（配置中）
+## npm 可信 CI 发布（已完成）
 
 2026-11-14，用户进一步要求创建 GitHub npm 可信 CI 发布流程。实现位于 `.github/workflows/publish.yml`，具体维护步骤见 [RELEASING.md](RELEASING.md)。
 
@@ -49,12 +50,16 @@
 - 使用 GitHub-hosted runner、Node 24 / npm 12.2.2；validate 无 OIDC，publish job 单独取得 `id-token: write`。未添加 npm token secret。
 - 稳定 Release 自动发布，手动运行仅 dry-run；验证不可变事件 SHA、main 历史、tag 与版本一致性、锁文件及版本未发布。验证与发布保持同一 SHA。
 - 77 项离线测试、Node / 实际安装包检查与 actionlint 通过。审查修正了同名分支可能覆盖 tag checkout，以及共享 concurrency 挤掉待执行 release 的问题。
-- npm 绑定待官方浏览器 2FA 保存；计划以 `0.1.1` 首次 CI 发布验证 OIDC 和 provenance。仅保存配置或 dry-run 不作为实际可信发布成功。
+- npm 官方浏览器 2FA 后成功保存 GitHub trusted publisher，workflow `publish.yml`、repo `Mars-Sea/coarena`、environment `npm`，权限 `publish, stage publish`。首次认证会话失效后重新完成，未使用长期 token 代替绑定。
+- [手动演练](https://github.com/Mars-Sea/coarena/actions/runs/43558399034) 成功，publish job 按预期跳过；[首次实际 CI 发布](https://github.com/Mars-Sea/coarena/actions/runs/43559393942) 的 validate / publish 均成功。
+- 实际发布版本 `coarena@0.1.1`，源码 `9bbfc4380d953807b802b03ca2e0fdf815d2eae4`；公开 registry 的 `_npmUser` 为 `GitHub Actions`，`trustedPublisher.id` 为 `github`，绑定 ID `ee9702a4-ef41-418f-9d2d-e8abf5b9cfe0` 与刚保存的配置一致。首次成功发布已激活绑定，不再只是未使用配置。
+- `latest` 已指向 `0.1.1`，公开 tarball SHA-1 为 `93007f0bc91e39cde0dc4aeb17f27b2b71d3a05d`，integrity 为 `sha512-NBYoGDg6EJSaR3UHTxkOojkeZpFzgY4PWlO3+2HUgw0id7sbn0QAz5aXw2ngbJmhtlOOvS8yLRZp4Qu/jzlzUA==`。独立下载、解包核对 12 个普通文件，并在无 node_modules / 禁止网络环境复验双入口、图标和中英文卡片。
+- 公开 [SLSA v1 provenance](https://registry.npmjs.org/-/npm/v1/attestations/coarena@0.1.1) 的 workflow repository、path、ref 与 gitCommit 均匹配本仓库、`.github/workflows/publish.yml`、`refs/tags/v0.1.1` 和上述 SHA；invocation 指向首次实际 CI 运行。npm 日志确认签署并上传 [Sigstore 透明日志](https://search.sigstore.dev/?logIndex=3870228228)。本次检查读取公开证明并核对身份字段，未另行执行完整 Sigstore 签名验证器。
 
 ## 执行结果
 
 1. GitHub 公开仓库、源码推送与 Node 22 / 24 CI 已完成。
-2. `coarena@0.1.0` npm 发布与公开包验证已完成。
+2. `coarena@0.1.0` 首次发布、`0.1.1` GitHub OIDC 可信发布及公开包验证均已完成。
 3. Magpie registry PR #1122 已提交，维护者因第三方中转服务政策关闭，未获收录；按包名安装仍可用。
 
 登录令牌和真实 Coarena Key 不写入命令参数、仓库或本文。真实 Magpie / OpenCode 宿主及 Coarena 端到端结果仍以 [VALIDATION.md](VALIDATION.md) 的边界为准。

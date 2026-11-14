@@ -2,6 +2,8 @@
 
 Coarena 使用 GitHub Actions → npm Trusted Publishing（OIDC）。公开仓库 `Mars-Sea/coarena` 的 `.github/workflows/publish.yml` 负责发布；npm 绑定的 workflow 名为 `publish.yml`，environment 为 `npm`，权限为 direct publish。
 
+已通过 [首次真实 CI 发布](https://github.com/Mars-Sea/coarena/actions/runs/43559393942) 将 `coarena@0.1.1` 发布至 npm，并生成 provenance；[手动演练](https://github.com/Mars-Sea/coarena/actions/runs/43558399034) 也确认 publish job 会跳过。
+
 ## 触发方式
 
 - 发布稳定版 GitHub Release，例如 `v0.1.2`，自动触发验证与 npm 发布。
