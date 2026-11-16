@@ -6,7 +6,7 @@
 
 ## 1. 背景与目标
 
-Coarena 提供一个 API Key 访问多个厂商模型的 Model API，支持 OpenAI Chat Completions、Responses 和 Anthropic Messages。官方当前宣传免费每日 $5 模型用量、每分钟 30 次请求、2 个并发；账号获批额度可能不同，必须以账号接口返回值为准。
+Coarena 提供一个 API Key 访问多个厂商模型的 Model API，支持 OpenAI Chat Completions、Responses 和 Anthropic Messages。2026-11-16 官方已将免费套餐限定到部分模型，仍有每日免费额度；credits 解锁全部模型并按余额扣费，无每日金额上限。每日额度、RPM、并发均以账号接口为准，不固定为旧版 $5 / 30 次。
 
 当前社区插件仓库使用 provider 插件把厂商接入 Magpie 和 OpenCode。用户希望把 Coarena 接为同类 provider，但项目必须在独立仓库维护，避免依赖原 monorepo 的目录、发布权限和自动化。
 
@@ -32,7 +32,7 @@ Coarena 提供一个 API Key 访问多个厂商模型的 Model API，支持 Open
 2. 使用 OpenAI Chat Completions 兼容协议调用 Coarena 全部实时模型。
 3. 普通响应、SSE 流式响应、客户端取消和多轮工具调用正常。
 4. 动态模型发现，映射名称、上下文、最大输出、工具、图像、推理能力和已知价格。
-5. Magpie `auth.usage` 读取真实每日美元额度、已用、预占、剩余与重置时间；可选每日请求数上限。
+5. Magpie `auth.usage` 区分每日免费额度和 credits 钱包；读取已用、预占、剩余与适用的重置时间；可选每日请求数上限。
 6. 准确区分 Key 失效、权限不足、账号限制、额度耗尽、限流和服务故障。
 7. Magpie、OpenCode 1.x、OpenCode 2.x 的加载入口与模型映射兼容；实际运行验证另列，不以导入测试替代。
 8. 可离线运行的测试、本地安装说明、npm 打包文件清单和维护文档。

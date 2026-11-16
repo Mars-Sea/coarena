@@ -1,0 +1,10 @@
+{
+  "source": "https://coarena.ai/account/api/models",
+  "verifiedAt": "2026-11-16",
+  "notice": "Free-tier eligibility verified on the official account models page. Public pricing=0 does not imply free access. Rights remain with the original rights holders.",
+  "models": [
+    "gpt-6-luna",
+    "gemini-3-8-flash",
+    "deepseek-v4-1-flash-1017"
+  ]
+}

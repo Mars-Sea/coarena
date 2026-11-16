@@ -1,5 +1,19 @@
 # 实施验证报告
 
+## 2026-11-16 新免费规则更新（0.1.2）
+
+本次版本为 `coarena@0.1.2`，GitHub / npm 发布结果见 DISTRIBUTION.md。下文 2026-11-14 是原发布记录，本节为最新增量验收。
+
+- 环境：Bun 1.4.4、Node v24.22.3、npm 12.2.2；Magpie App / 内置 CLI 0.1.4282（Info.plist 核对）。
+- `bun test`：**83 pass，0 fail，7 个测试文件**。含三个免费资格、未知/付费零价不误标、服务端布尔覆盖、两种模型结构、Free/Paid/Suspended、钱包无每日重置、缺失不当零、credits 的错误/取消、跨账号缓存/套餐切换与原有真实 SDK 到本地合成 HTTP 验证。旧 daily 专项测试的辅助工厂对 credits 返回合成免费对象；新增 credits 测试直接调用实际工厂并验证两次请求。
+- `bun run check`、`npm run check:node`、`npm run check:package`、`npm pack --dry-run --json` 通过。**13 个打包文件**，新增 free-tier.json；解包双入口、图标与语言无 node_modules / 网络仍可用。默认生产依赖仍为零。SDK 回环测试在沙箱内无法监听，提升权限后全量通过；没有因此访问真实推理服务。
+- `bun run bootstrap` 从新归档公开目录生成 **18 模型**；导入 / config 仍离线。三项 free=true，其余 false。当前公共报价仍为零，资格独立判定。
+- 当前宿主已使用本仓库的绝对路径。对该插件执行 off/on 重载，原生 App 的 Coarena 设置页实际确认 DeepSeek V4.1 Flash 1017、Gemini 3.8 Flash、GPT-6 Luna 后带“免费”；其他模型无徽标；“只选免费”按钮出现。展开其余模型核对全部三项，未点击筛选或保存，不改变用户模型选择。仅对 free 字段做宿主 UI 验收；不是 OpenCode 验收或模型推理验收。
+- 宿主已有账号卡片显示每日 1 USD、10 RPM 和 2 并发。此为宿主显示证据，不保存真实 Key 或受保护 JSON，不作为其他账号的默认配置，也不声称已逐字段核对受保护接口。Paid 钱包只有合成契约测试，真实充值后的计划及余额仍待验证。
+- 新公开资料与历史归档分别保存，SHA256SUMS 增补新文件。真实 Key 未从认证文件/其他项目读取，未发送真实模型测试、充值、提额、反馈或发布操作。
+
+## 2026-11-14 原发布验证
+
 验证日期：2026-11-14。插件：**Coarena**，版本：`coarena@0.1.1`，已通过 GitHub OIDC 发布至 npm。
 
 **结论：P0 的 M1–M5 实现与对应离线项已完成；真实 Coarena 账号和 Magpie / OpenCode 宿主端到端验收未验证。** GitHub / npm / Magpie 分发进度单独记录于 [DISTRIBUTION.md](DISTRIBUTION.md)。没有读取真实 Coarena Key，也没有发送真实推理、额度申请或反馈请求。

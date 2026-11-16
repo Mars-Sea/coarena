@@ -1,3 +1,4 @@
+import { createDailyPlugin } from "./free-credits-helper.mjs"
 import { test, expect, describe } from "bun:test"
 import { readFileSync } from "node:fs"
 import { _internal } from "../index.mjs"
@@ -81,7 +82,7 @@ describe("daily usage normalization", () => {
 describe("usage reads and credential isolation", () => {
   test("parallel accounts are isolated; one auth header; 30-second TTL; cached values are copied", async () => {
     let time = 0; const calls = []
-    const plugin = _internal.createPlugin({ now: () => time, fetchImpl: async (url, init) => {
+    const plugin = createDailyPlugin({ now: () => time, fetchImpl: async (url, init) => {
       calls.push({ url, init })
       const key = new Headers(init.headers).get("authorization")
       const body = structuredClone(fixture)
@@ -104,7 +105,7 @@ describe("usage reads and credential isolation", () => {
   })
   test("same-key reads merge; cancelled waiter cannot abort another", async () => {
     let release; const gate = new Promise((r) => { release = r }); let calls = 0
-    const plugin = _internal.createPlugin({ fetchImpl: async () => { calls++; await gate; return Response.json(fixture) } })
+    const plugin = createDailyPlugin({ fetchImpl: async () => { calls++; await gate; return Response.json(fixture) } })
     const controller = new AbortController()
     const first = plugin.auth.usage(auth(), {}, { signal: controller.signal })
     const second = plugin.auth.usage(auth())
@@ -116,18 +117,18 @@ describe("usage reads and credential isolation", () => {
   })
   test("expired success is never returned as current after network/format failure", async () => {
     let time = 0; let calls = 0
-    const plugin = _internal.createPlugin({ now: () => time, fetchImpl: async () => { if (++calls === 1) return Response.json(fixture); throw new Error("private network detail") } })
+    const plugin = createDailyPlugin({ now: () => time, fetchImpl: async () => { if (++calls === 1) return Response.json(fixture); throw new Error("private network detail") } })
     await plugin.auth.usage(auth())
     time = 30000
     const result = await plugin.auth.usage(auth())
     expect(result).toMatchObject({ signIn: "kept", windows: [] })
     expect(result.error).not.toContain("private")
-    const malformed = _internal.createPlugin({ fetchImpl: async () => new Response("<html>private</html>") })
+    const malformed = createDailyPlugin({ fetchImpl: async () => new Response("<html>private</html>") })
     expect((await malformed.auth.usage(auth())).windows).toEqual([])
   })
   test("timeout and cancellation abort downstream without retry", async () => {
     let calls = 0; let downstream
-    const plugin = _internal.createPlugin({ timeoutMs: 10, fetchImpl: async (_url, init) => { calls++; downstream = init.signal; return new Promise(() => {}) } })
+    const plugin = createDailyPlugin({ timeoutMs: 10, fetchImpl: async (_url, init) => { calls++; downstream = init.signal; return new Promise(() => {}) } })
     expect((await plugin.auth.usage(auth())).error).toContain("超时")
     expect(downstream.aborted).toBe(true)
     expect(calls).toBe(1)
@@ -142,7 +143,7 @@ describe("usage reads and credential isolation", () => {
     [429, "insufficient_quota", "kept"], [429, "rate_limit_exceeded", "kept"], [429, "concurrency", "kept"],
     [503, "model_api_disabled", "kept"], [503, "server_draining", "kept"], [503, "quota_unavailable", "kept"],
   ])("HTTP %s %s -> %s", async (status, code, signIn) => {
-    const plugin = _internal.createPlugin({ fetchImpl: async () => Response.json({ error: { code, message: "synthetic detail" } }, { status, headers: { "x-request-id": "synthetic-request", "retry-after": "30" } }) })
+    const plugin = createDailyPlugin({ fetchImpl: async () => Response.json({ error: { code, message: "synthetic detail" } }, { status, headers: { "x-request-id": "synthetic-request", "retry-after": "30" } }) })
     const result = await plugin.auth.usage(auth())
     expect(result.signIn).toBe(signIn)
     expect(result.windows).toEqual([])
@@ -162,7 +163,7 @@ describe("usage reads and credential isolation", () => {
   })
   test("error bodies redact secrets; HTML is not echoed", async () => {
     const key = "synthetic-secret-DO-NOT-ECHO"
-    const plugin = _internal.createPlugin({ fetchImpl: async () => Response.json({ error: { code: "invalid_api_key", message: `Bearer ${key}, x-api-key=coa_synthetic_secret` } }, { status: 401 }) })
+    const plugin = createDailyPlugin({ fetchImpl: async () => Response.json({ error: { code: "invalid_api_key", message: `Bearer ${key}, x-api-key=coa_synthetic_secret` } }, { status: 401 }) })
     const result = await plugin.auth.usage(auth(key))
     expect(result.error).not.toContain(key)
     expect(result.error).not.toContain("coa_synthetic_secret")

@@ -8,14 +8,16 @@
     },
     "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPCEtLSBGYXZpY29uIGN1dCBvZiB0aGUgQ29hcmVuYSBtYXJrOiBldmVyeSBlZGdlIHNpdHMgb24gZXZlbiB2aWV3Qm94IHVuaXRzCiAgICAgICBzbyBhIDE2cHggcmFzdGVyIGxhbmRzIG9uIHdob2xlIHBpeGVscyAoMXB4ID0gMiB1bml0cykuIC0tPgogIDxzdHlsZT4KICAgIHBhdGggeyBmaWxsOiAjMDkwOTBiIH0KICAgIEBtZWRpYSAocHJlZmVycy1jb2xvci1zY2hlbWU6IGRhcmspIHsgcGF0aCB7IGZpbGw6ICNmYWZhZmEgfSB9CiAgPC9zdHlsZT4KICA8cGF0aCBkPSJNMjkuNDE2IDEyQTE0IDE0IDAgMSAwIDI5LjQxNiAyMEwyNC4wNjIgMjBBOSA5IDAgMSAxIDI0LjA2MiAxMloiLz4KICA8cGF0aCBkPSJNMTUgMTBoMmExIDEgMCAwIDEgMSAxdjJhMSAxIDAgMCAxLTEgMWgtMmExIDEgMCAwIDEtMS0xdi0yYTEgMSAwIDAgMSAxLTFaIi8+CiAgPHBhdGggZD0iTTE1IDE4aDJhMSAxIDAgMCAxIDEgMXYyYTEgMSAwIDAgMS0xIDFoLTJhMSAxIDAgMCAxLTEtMXYtMmExIDEgMCAwIDEgMS0xWiIvPgo8L3N2Zz4K"
   },
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Coarena Model API provider for Magpie and OpenCode",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Mars-Sea/coarena.git"
   },
   "homepage": "https://github.com/Mars-Sea/coarena#readme",
-  "bugs": { "url": "https://github.com/Mars-Sea/coarena/issues" },
+  "bugs": {
+    "url": "https://github.com/Mars-Sea/coarena/issues"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
@@ -35,6 +37,7 @@
     "opencode.mjs",
     "opencode2.mjs",
     "models.bootstrap.json",
+    "free-tier.json",
     "README.md",
     "LICENSE"
   ],

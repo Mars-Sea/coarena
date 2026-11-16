@@ -1,5 +1,10 @@
 # 变更记录
 
+## 0.1.2 — 2026-11-16
+
+- 按新免费资格提供原生 free 徽标及“只选免费”；更新 18 模型离线目录。
+- 区分免费每日额度与 credits 钱包，按账号隔离缓存，增加付费错误提示。
+
 ## 0.1.1 — 2026-11-14
 
 - 新增 GitHub Actions npm Trusted Publishing：稳定版 Release 自动发布，手动触发仅验证与 dry-run；无长期 npm Token，发布生成 provenance。

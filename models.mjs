@@ -1,5 +1,10 @@
 import { BASE, SDK, FELL_BACK, numberOf, isoOf, record, sharedTask, jsonResponse } from "./http.mjs"
 
+import { readFileSync } from "node:fs"
+
+// The public catalog currently omits eligibility and quotes zero for paid models too.
+const freeModels = new Set(JSON.parse(readFileSync(new URL("./free-tier.json", import.meta.url), "utf8")).models)
+
 const tokenOf = (v) => { const n = numberOf(v); return n === undefined ? undefined : Math.trunc(n) }
 const modalities = (image = false) => ({ text: true, image, audio: false, video: false, pdf: false })
 
@@ -24,6 +29,7 @@ export function normalizeModels(body, now = Date.now()) {
     const release = isoOf(m.created_at)
     entries.set(m.id, {
       id: m.id,
+      free: typeof m.free === "boolean" ? m.free : freeModels.has(m.id),
       name: typeof m.display_name === "string" && m.display_name.trim() ? m.display_name : m.id,
       status: m.lifecycle === "deprecated" || isoOf(m.deprecated_at) ? "deprecated" : "active",
       limit: { context: tokenOf(m.context_length) ?? input ?? 0, ...(input !== undefined ? { input } : {}), output: tokenOf(m.max_completion_tokens) ?? tokenOf(m.max_tokens) ?? 0 },
@@ -40,7 +46,7 @@ export function normalizeModels(body, now = Date.now()) {
 
 export function toConfigModel(m) {
   return {
-    id: m.id, name: m.name, status: m.status,
+    id: m.id, name: m.name, status: m.status, free: m.free === true,
     provider: { npm: SDK, api: BASE },
     reasoning: m.reasoning, attachment: m.image, tool_call: m.tools,
     temperature: false,
@@ -54,7 +60,7 @@ export function toConfigModel(m) {
 
 export function toRuntimeModel(m) {
   return {
-    id: m.id, name: m.name, providerID: "coarena", status: m.status,
+    id: m.id, name: m.name, providerID: "coarena", status: m.status, free: m.free === true,
     api: { id: m.id, url: BASE, npm: SDK }, headers: {}, options: {},
     limit: { ...m.limit },
     cost: { ...m.cost, cache: { read: 0, write: 0 } }, // host unknown-price defaults

@@ -1,5 +1,6 @@
 // Only plugin-owned words are translated; service error codes/messages stay intact.
 const zh = {
+  credits: "Credits 余额", paid: "Credits 付费套餐", balance: "余额", available: "可用", noDailyLimit: "无每日金额上限，按余额扣费",
   daily: "每日模型额度", requests: "每日请求次数", rate: "速率限制", request: "额度申请",
   free: "免费每日额度", granted: "获批每日额度", plan: "每日额度",
   unknown: "未知", used: "已用", held: "预占", left: "剩余", unavailable: "无可用额度", requestUnit: "次",
@@ -8,6 +9,7 @@ const zh = {
   requestID: "请求 ID", retry: "Retry-After", reset: "重置时间",
   cancelled: "额度读取已取消", timedOut: "额度读取超时", readFailed: "无法读取额度（网络或响应格式错误）",
   advice: {
+    payment: "此模型需要 credits；免费账号请选带免费标记的模型。", balance: "Credits 余额不足；请减少 max_tokens 或到官方账单页充值。", billingSuspended: "Coarena 计费已暂停，请检查官方账单页。",
     expired: "请重新输入 Coarena API 密钥。", conflicting: "请检查是否存在冲突的鉴权请求头。",
     scope: "请检查该密钥的推理权限。", account: "请检查 Coarena 账号状态。",
     quota: "请等待每日额度重置，或检查账号额度。", rate: "请稍后重试。",
@@ -15,6 +17,7 @@ const zh = {
   },
 }
 const en = {
+  credits: "Credits balance", paid: "Paid credits", balance: "Balance", available: "Available", noDailyLimit: "No daily monetary limit; charged from credits",
   daily: "Daily model allowance", requests: "Daily requests", rate: "Rate limits", request: "Allowance request",
   free: "Free daily allowance", granted: "Granted daily allowance", plan: "Daily allowance",
   unknown: "unknown", used: "Used", held: "Held", left: "Left", unavailable: "No available allowance", requestUnit: "requests",
@@ -23,6 +26,7 @@ const en = {
   requestID: "Request ID", retry: "Retry-After", reset: "Resets at",
   cancelled: "read cancelled", timedOut: "read timed out", readFailed: "could not read limits (network or response format error)",
   advice: {
+    payment: "This model requires credits; free accounts can select a model marked free.", balance: "Insufficient credits; reduce max_tokens or add credits on the official billing page.", billingSuspended: "Coarena billing is suspended; check the official billing page.",
     expired: "Enter a new Coarena API key.", conflicting: "Check for conflicting authentication headers.",
     scope: "Check this key's inference scopes.", account: "Check your Coarena account status.",
     quota: "Wait for the daily reset or check your account allowance.", rate: "Wait before retrying.",

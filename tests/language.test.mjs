@@ -1,3 +1,4 @@
+import { createDailyPlugin } from "./free-credits-helper.mjs"
 import { describe, test, expect } from "bun:test"
 import { readFileSync } from "node:fs"
 import { _internal, CoarenaPlugin } from "../index.mjs"
@@ -29,7 +30,7 @@ describe("usage card languages", () => {
   })
   test("switching language rerenders the account cache without refetching or sharing mutable output", async () => {
     let language = "zh"; let calls = 0
-    const plugin = _internal.createPlugin({ language: () => language, fetchImpl: async () => { calls++; return Response.json(fixture) } })
+    const plugin = createDailyPlugin({ language: () => language, fetchImpl: async () => { calls++; return Response.json(fixture) } })
     const first = await plugin.auth.usage(auth)
     first.windows[0].limit = 999
     language = "en"
@@ -44,7 +45,7 @@ describe("usage card languages", () => {
     for (const failed of [false, true]) {
       let language = "zh"; let calls = 0; let release
       const gate = new Promise((resolve) => { release = resolve })
-      const plugin = _internal.createPlugin({ language: () => language, fetchImpl: async () => {
+      const plugin = createDailyPlugin({ language: () => language, fetchImpl: async () => {
         calls++; await gate
         return failed ? Response.json({ error: { code: "insufficient_quota", message: "service detail" } }, { status: 429, headers: { "x-request-id": "synthetic-request" } }) : Response.json(fixture)
       } })

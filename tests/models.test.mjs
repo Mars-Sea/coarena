@@ -13,7 +13,7 @@ describe("registration and conservative model normalization", () => {
     const cfg = {}
     await plugin.config(cfg)
     expect(cfg.provider.coarena.npm).toBe("@ai-sdk/openai-compatible")
-    expect(Object.keys(cfg.provider.coarena.models).length).toBe(20)
+    expect(Object.keys(cfg.provider.coarena.models).length).toBe(18)
     const custom = { provider: { coarena: { models: { mine: {} } } } }
     const saved = custom.provider.coarena
     await plugin.config(custom)

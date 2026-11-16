@@ -72,7 +72,7 @@ test("failure marker retains bootstrap on initial discovery", async () => {
     hooks.provider.models = async () => { const result = {}; Object.defineProperty(result, FELL_BACK, { value: true }); return result }
     return hooks
   } })
-  expect(host.providers.get("coarena").models.length).toBe(20)
+  expect(host.providers.get("coarena").models.length).toBe(18)
   stop(); host.end()
 })
 

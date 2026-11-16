@@ -30,7 +30,7 @@ for (let attempt = 1; attempt <= 24; attempt++) {
     const bytes = Buffer.from(await archive.arrayBuffer())
     assert.equal(createHash("sha1").update(bytes).digest("hex"), metadata.dist.shasum)
     assert.equal("sha512-" + createHash("sha512").update(bytes).digest("base64"), metadata.dist.integrity)
-    console.log(`Public ${pkg.name}@${pkg.version} verified: source, entries, icons, 12 files, tarball hashes and provenance metadata`)
+    console.log(`Public ${pkg.name}@${pkg.version} verified: source, entries, icons, ${metadata.dist.fileCount} files, tarball hashes and provenance metadata`)
     process.exit(0)
   } catch (error) {
     failure = error

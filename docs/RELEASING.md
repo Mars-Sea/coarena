@@ -17,7 +17,7 @@ Coarena 使用 GitHub Actions → npm Trusted Publishing（OIDC）。公开仓�
 - 发布环境：`npm`；仅允许 `v*` 类型为 tag 的部署。
 - 只有 publish job 拥有 `id-token: write`；根权限为 `contents: read`。验证 job 不取得发布身份。
 - 不设置 NPM_TOKEN / NODE_AUTH_TOKEN secret。CLI 使用 GitHub OIDC 交换短期凭据，发布时生成 provenance。
-- release 任务禁用依赖缓存；验证 job 安装锁定开发依赖，运行 `prepublishOnly`，检查 12 文件实际 tarball。发布 job 使用已经通过验证的同一源码，不安装依赖、不运行构建，并以 `--ignore-scripts` 避免再次执行验证脚本。
+- release 任务禁用依赖缓存；验证 job 安装锁定开发依赖，运行 `prepublishOnly`，检查 package.json 声明的完整文件清单（0.1.2 为 13 个文件）。发布 job 使用已经通过验证的同一源码，不安装依赖、不运行构建，并以 `--ignore-scripts` 避免再次执行验证脚本。
 - 发布后等待公开 registry 传播，核对版本、gitHead、双入口、图标、文件数、tarball SHA-1 / SHA-512 与 provenance 元数据。
 
 可信绑定命令如下，只在首次配置或绑定过期时由有 npm 包写权限的维护者交互执行；npm 会要求官方浏览器 2FA：

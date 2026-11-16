@@ -2,6 +2,17 @@
 
 调研日期 2026-11-14。优先级：最新官方 API / 宿主行为 > 此文档 > 静态快照。公开模型接口已实际读取，受保护接口尚未使用真实 Key 验证。
 
+## 2026-11-16 规则更新
+
+当前实现以本节覆盖下文 2026-11-14 的历史契约：
+
+- 公开目录实际为 18 模型、has_more:false；新快照在 `reference/coarena/2026-11-16/models.json`。官网 docs 仍写 22，不能固定用官网数量。
+- 官方账号模型页确认仅 `gpt-6-luna`、`gemini-3-8-flash`、`deepseek-v4-1-flash-1017` 为免费。公共目录没有资格字段且所有 pricing 仍为零；独立 `free-tier.json` 保存带日期的资格，不按价格或名称推测。未来明确布尔 `free` 优先，两种模型结构都提供顶层 `free`。
+- `GET /api/v1/credits` 使用相同单 Bearer 和任一 inference scope；成功对象为顶层 `{object:"credits",plan:"free"|"paid"|"suspended",balance_usd,held_usd,available_usd,free_daily_usd,...}`，不是 `data` 包装。公开 OpenAPI 摘录在 `reference/coarena/2026-11-16/contracts.json`。
+- usage 同时读取 limits 与 credits，按 Key 一起缓存 30 秒。Free 继续每日 amount/limit；limits 缺少上限时才采用 credits.free_daily_usd。Paid 主窗口为 `{balance:available_usd,unit:"USD",display}`，不提供 amount/limit/used/span/resetsAt，也不提供 granted_until。可用余额以服务端为准，不重复减 held。
+- 不明套餐、非法 credits、任一读取失败时不回退成免费套餐或显示旧成功；suspended 返回明确错误并保留凭据。402 payment_required / insufficient_balance、403 billing_suspended 均保留凭据，提供选择免费模型 / 检查账单的建议。
+- 按账号接口展示 RPM / 并发，不硬编码为 10 或 30。免费每日额度、每日次数限制与付费钱包独立；买 credits 后无每日金额限制不等于免费无限。
+
 ## 1. 路由与权限
 
 | 目的 | 完整 URL / 方法 | Key / scope | 首版 |
@@ -12,6 +23,7 @@
 | Responses | POST https://coarena.ai/api/v1/responses | inference:write | P1 |
 | Messages | POST https://coarena.ai/api/v1/messages | inference:write | P1 |
 | 额度 | GET https://coarena.ai/api/v1/limits | inference:read 或 inference:write | 使用 |
+| Credits | GET https://coarena.ai/api/v1/credits | inference:read 或 inference:write | 使用 |
 | 当前 Key 状态 | GET https://coarena.ai/api/v1/key | inference:read 或 inference:write | 后续诊断可用，首版不额外必调 |
 | 历史用量 | GET https://coarena.ai/api/v1/usage | inference:read | P1；write-only Key 不应为此被标失效 |
 | 提额申请 | POST https://coarena.ai/api/v1/limits/requests | inference:write | P1，仅用户主动 |

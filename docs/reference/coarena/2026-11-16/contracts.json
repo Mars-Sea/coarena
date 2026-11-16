@@ -1,0 +1,311 @@
+{
+  "source": "https://coarena.ai/api/openapi.json",
+  "capturedAt": "2026-11-16",
+  "info": {
+    "title": "CoArena API",
+    "version": "2026-11-02",
+    "description": "Every CoArena feature, over HTTP. Authenticate with a personal API key (Authorization: Bearer coa_\u2026) minted on your account page; each operation names the scope it needs. Errors share one envelope, except on the Model API (/api/v1), which answers in OpenAI's or Anthropic's so their SDKs can parse it (x-coarena-envelope on each operation says which); 429 and 503 carry Retry-After. See /developers."
+  },
+  "paths": {
+    "/api/v1/models": {
+      "get": {
+        "operationId": "getV1Models",
+        "summary": "The models the Model API offers, in one list that both OpenAI and Anthropic clients read. No key is needed.",
+        "tags": [
+          "model-api"
+        ],
+        "parameters": [],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "429": {
+            "description": "rate_limit_exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenAIError"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "200 {object:'list', data:[{id, object:'model', created, owned_by, type:'model', display_name, created_at, lifecycle, max_input_tokens, max_tokens, context_length, max_completion_tokens, pricing, capabilities, aliases}], has_more:false, first_id, last_id}. Cache: public, max-age=5. With the Model API not enabled on the deployment, data is [] and x-coarena-model-api: off; with the operator's master switch off, data is [] and x-coarena-model-api: switched-off; a model switched off is left out.",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "x-coarena-bearer": "ignored",
+        "x-coarena-consent-gate": false,
+        "x-coarena-side-effect-free": true,
+        "x-coarena-schema": "prose",
+        "x-coarena-envelope": "openai",
+        "x-coarena-rate-limit": "120 a minute per address",
+        "description": "Request: none; a key is not read"
+      },
+      "options": {
+        "operationId": "optionsV1Models",
+        "summary": "CORS preflight for the Model API operations on this path.",
+        "tags": [
+          "model-api"
+        ],
+        "parameters": [],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "default": {
+            "description": "204, no body: Access-Control-Allow-Origin *, Allow-Methods 'GET, POST, PUT, PATCH, DELETE, OPTIONS', Allow-Headers echoing the requested names (validated) else 'authorization, x-api-key, content-type, anthropic-version, anthropic-beta', Max-Age 600; never Allow-Credentials.",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "x-coarena-bearer": "ignored",
+        "x-coarena-consent-gate": false,
+        "x-coarena-side-effect-free": true,
+        "x-coarena-schema": "prose",
+        "description": "Request: none"
+      }
+    },
+    "/api/v1/limits": {
+      "get": {
+        "operationId": "getV1Limits",
+        "summary": "The calling key's account: its free daily limit and today's use, its minute and at-once limits, its daily request limit when an operator set one, its ask for higher limits, whether it may ask now, and how. Either Model API scope will do.",
+        "tags": [
+          "model-api"
+        ],
+        "parameters": [],
+        "security": [
+          {
+            "personalKey": [
+              "inference:read"
+            ]
+          },
+          {
+            "personalKey": [
+              "inference:write"
+            ]
+          },
+          {
+            "personalKeyHeader": [
+              "inference:read"
+            ]
+          },
+          {
+            "personalKeyHeader": [
+              "inference:write"
+            ]
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "invalid_api_key; api_key_revoked; api_key_expired; api_keys_disabled; conflicting_credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenAIError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "insufficient_scope; account_blocked; account_withdrawn",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenAIError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "rate_limit_exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenAIError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "model_api_disabled; server_draining; quota_unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenAIError"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "200 {data:{free:true, usd_per_day, default_usd_per_day, source (default|granted), granted_until, requests_per_minute_key, requests_per_minute_account, requests_per_minute_model, default_requests_per_minute, requests_per_day (null: no daily request limit, the default), concurrency, today:{used_usd, held_usd, left_usd, requests, requests_left (null with no daily request limit), resets_at, refused:{rate, concurrency, quota, shared}}, request:null|{id, status (pending|granted|declined|withdrawn), requested_usd (null when the ask names no dollars), granted_usd, requested:{usd_per_day, requests_per_minute, requests_per_day} (null when not named), granted:null|{usd_per_day, requests_per_minute, requests_per_day} (null requests_per_day: the cap removed), note (null when none), decision_note, source (dashboard|api), created_at, decided_at} (waiting, or decided in the last 14 days), can_ask, cannot_ask:null|limit_request_no_calls|limit_request_pending|limit_at_max (every limit that can be asked for at its max)|model_api_terms_required|account_withdrawn|account_blocked, next_steps_usd:[up to 3], next_steps_requests_per_minute:[up to 3], next_steps_requests_per_day:[up to 3; [] with no daily request limit], max_usd_per_day:100000, max_requests_per_minute:600, max_requests_per_day:100000, ask:null|{method:'POST', url, body:{usd_per_day (or at $100,000 requests_per_minute), note:'optional'}, example (a curl line), fields:{usd_per_day:{now, next}, requests_per_minute:{now, next}, requests_per_day?:{now, next} (only with a daily request limit)}}, page}} (no-store, private)",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "x-coarena-bearer": "accepted",
+        "x-coarena-consent-gate": false,
+        "x-coarena-side-effect-free": true,
+        "x-coarena-schema": "prose",
+        "x-coarena-scope": "inference:read",
+        "x-coarena-or-scope": "inference:write",
+        "x-coarena-envelope": "openai",
+        "x-coarena-rate-limit": "the key's Model API read window (mapi:read)",
+        "description": "Request: none"
+      },
+      "options": {
+        "operationId": "optionsV1Limits",
+        "summary": "CORS preflight for the Model API operations on this path.",
+        "tags": [
+          "model-api"
+        ],
+        "parameters": [],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "default": {
+            "description": "204, no body: Access-Control-Allow-Origin *, Allow-Methods 'GET, POST, PUT, DELETE, OPTIONS', Allow-Headers echoing the requested names (validated) else 'authorization, x-api-key, content-type, anthropic-version, anthropic-beta', Max-Age 600; never Allow-Credentials.",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "x-coarena-bearer": "ignored",
+        "x-coarena-consent-gate": false,
+        "x-coarena-side-effect-free": true,
+        "x-coarena-schema": "prose",
+        "description": "Request: none"
+      }
+    },
+    "/api/v1/credits": {
+      "get": {
+        "operationId": "getV1Credits",
+        "summary": "The calling key's account's credits: plan ('free' until its first purchase), balance, held, available, auto-recharge, the discount below list price, and where to buy more. Either Model API scope will do.",
+        "tags": [
+          "model-api"
+        ],
+        "parameters": [],
+        "security": [
+          {
+            "personalKey": [
+              "inference:read"
+            ]
+          },
+          {
+            "personalKey": [
+              "inference:write"
+            ]
+          },
+          {
+            "personalKeyHeader": [
+              "inference:read"
+            ]
+          },
+          {
+            "personalKeyHeader": [
+              "inference:write"
+            ]
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "invalid_api_key; api_key_revoked; api_key_expired; api_keys_disabled; conflicting_credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenAIError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "insufficient_scope; account_blocked; account_withdrawn",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenAIError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "rate_limit_exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenAIError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "model_api_disabled; server_draining; quota_unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenAIError"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "200 {object:'credits', plan:'free'|'paid'|'suspended', on_sale, balance_usd, held_usd, available_usd, discount_pct, free_daily_usd (null once paid), auto_recharge:{enabled, threshold_usd, amount_usd}, buy_url} (no-store, private)",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "x-coarena-bearer": "accepted",
+        "x-coarena-consent-gate": false,
+        "x-coarena-side-effect-free": true,
+        "x-coarena-schema": "prose",
+        "x-coarena-scope": "inference:read",
+        "x-coarena-or-scope": "inference:write",
+        "x-coarena-envelope": "openai",
+        "x-coarena-rate-limit": "the key's Model API read window (mapi:read)",
+        "description": "Request: none"
+      },
+      "options": {
+        "operationId": "optionsV1Credits",
+        "summary": "CORS preflight for the Model API operations on this path.",
+        "tags": [
+          "model-api"
+        ],
+        "parameters": [],
+        "security": [
+          {}
+        ],
+        "responses": {
+          "default": {
+            "description": "204, no body: Access-Control-Allow-Origin *, Allow-Methods 'GET, POST, PUT, DELETE, OPTIONS', Allow-Headers echoing the requested names (validated) else 'authorization, x-api-key, content-type, anthropic-version, anthropic-beta', Max-Age 600; never Allow-Credentials.",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "x-coarena-bearer": "ignored",
+        "x-coarena-consent-gate": false,
+        "x-coarena-side-effect-free": true,
+        "x-coarena-schema": "prose",
+        "description": "Request: none"
+      }
+    }
+  }
+}

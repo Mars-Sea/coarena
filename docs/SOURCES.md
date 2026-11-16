@@ -123,3 +123,11 @@ River是API Key与简单provider最接近的完整工程样本；不是Coarena�
 - 当前官方要求 npm >=11.5.1、Node >=22.14、GitHub-hosted runner 及 job 的 `id-token: write`；workflow 字段仅填写文件名，repo、workflow、environment 大小写须匹配。新绑定默认 stage-only，独立直接发布须显式 `--allow-publish`。公开仓库与包可自动生成 provenance。
 - 最新官方文档说明最多 10 个 trusted publishers；本机随 npm 附带的旧文档仍称最多一个，以最新官方文档为准。新绑定需在 2 天内首次成功发布，否则过期；首次成功后固定仓库身份。
 - 调整：固定 `Mars-Sea/coarena`、`publish.yml`、`npm` 环境，稳定 GitHub Release 触发实际发布，manual 仅 dry-run。[首次实际 `0.1.1` CI 发布](https://github.com/Mars-Sea/coarena/actions/runs/43559393942) 已成功，公开 publisher 为 GitHub Actions / github，SLSA provenance 指向相同仓库、workflow、tag 和源码 SHA。具体结果记录于分发文档；不添加长期 npm token，不改变真实 Coarena 推理 / limits 验收范围。
+
+## 2026-11-16 免费模型与 credits 规则
+
+- 重新读取官方 [docs](https://coarena.ai/docs)、[for-agents](https://coarena.ai/for-agents.md)、[OpenAPI](https://coarena.ai/api/openapi.json)、公开 [models](https://coarena.ai/api/v1/models)。Python urllib 公开 GET 成功，未附带 Key；模型为 18 条、has_more:false。旧归档不改，新增 `reference/coarena/2026-11-16/models.json` 与相关 OpenAPI 契约摘录 `contracts.json`；OpenAPI info.version 仍为 2026-11-02。
+- Chrome 当前账号模型页把 GPT-6 Luna、Gemini 3.8 Flash、DeepSeek V4.1 Flash 1017 标为 Free，其余需要 credits；用户提供的 402 报错列出同一名单。公开目录没有 free 字段且全部报价仍为 0，因此新增有来源日期的 `free-tier.json`，不能由 pricing=0 推断免费。未来明确布尔 free 优先；名单不会因目录自动刷新而自动增补。
+- 官网 docs 仍写 22 模型、30 RPM；当前账号 How it's free 为 10 RPM、2 并发并明确每日 allowance。差异影响：目录数量和速率不能硬编码；免费仍有每日限制，credits 才无每日金额上限。宿主本次 UI 显示每日 1 USD 和 10 RPM，但不作为所有账号的默认值，不保存真实受保护响应。
+- OpenAPI credits 成功对象在顶层，plan 为 free/paid/suspended，包含 balance_usd/held_usd/available_usd/free_daily_usd，支持任一 inference scope。更新 usage 读取源和套餐语义；不调用充值、自动充值、提额、反馈或推理，不新增协议。
+- 重新下载 [Magpie host.js](https://raw.githubusercontent.com/yetone/magpie/master/internal/plugin/host.js)，模型列表透传 `free:m.free===true`；usage 支持无总额钱包的窗口 balance。运行中 Magpie 0.1.4282 已按本地目录加载本仓库，经 off/on 重载后在 Coarena 设置页确认原生徽标及“只选免费”。没有修改旁边仓库或宿主源码。

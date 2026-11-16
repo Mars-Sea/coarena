@@ -2,6 +2,12 @@
 
 此文档与 PRD 一起使用。参考源码均已放入 [reference/plugins/river](reference/plugins/river)，不要求访问原 monorepo。
 
+## 2026-11-16 补充
+
+两种模型结构都传递顶层布尔 `free`，让 Magpie 提供原生徽标与“只选免费”；不改写模型名称或 API ID。资格来源与当前模型数量见 API-MAPPING 的更新节。
+
+`auth.usage` 现在一起读取 limits / credits。Paid 使用窗口数值 `balance=available_usd`（无总额钱包），不设置每日进度和重置；Free 保持原每日额度映射。旧示例仍说明 Free，不能推广至 Paid。
+
 ## 1. 最小包结构与元数据
 
 实施时创建以下 package.json；这是**计划示例**，包名可用性与实际版本需要在发布前确认：
