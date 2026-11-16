@@ -2,7 +2,7 @@
 
 ## 2026-11-16 新免费规则更新（0.1.2）
 
-本次版本为 `coarena@0.1.2`，GitHub / npm 发布结果见 DISTRIBUTION.md。下文 2026-11-14 是原发布记录，本节为最新增量验收。
+本次版本 `coarena@0.1.2` 已经 GitHub OIDC 发布，npm latest=0.1.2；实际公开 tarball 的 13 个文件与发布源码逐字节一致，双入口与免费标签的离线解包检查通过。GitHub / npm 发布结果见 DISTRIBUTION.md。下文 2026-11-14 是原发布记录，本节为最新增量验收。
 
 - 环境：Bun 1.4.4、Node v24.22.3、npm 12.2.2；Magpie App / 内置 CLI 0.1.4282（Info.plist 核对）。
 - `bun test`：**83 pass，0 fail，7 个测试文件**。含三个免费资格、未知/付费零价不误标、服务端布尔覆盖、两种模型结构、Free/Paid/Suspended、钱包无每日重置、缺失不当零、credits 的错误/取消、跨账号缓存/套餐切换与原有真实 SDK 到本地合成 HTTP 验证。旧 daily 专项测试的辅助工厂对 credits 返回合成免费对象；新增 credits 测试直接调用实际工厂并验证两次请求。

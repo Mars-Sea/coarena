@@ -7,9 +7,9 @@
 | 项目 | 地址 / 名称 | 状态 |
 | --- | --- | --- |
 | GitHub | https://github.com/Mars-Sea/coarena | 已创建公开仓库并推送 `main`；实现提交 `f6ec210` |
-| GitHub Release | [Coarena 0.1.1](https://github.com/Mars-Sea/coarena/releases/tag/v0.1.1) | 已发布，tag 与 npm `gitHead` 均为 `9bbfc43` |
-| npm | [`coarena@0.1.1`](https://www.npmjs.com/package/coarena) | 已通过 GitHub OIDC 发布，`latest` 为 `0.1.1`；公开 tarball 与 provenance 核对通过 |
-| Trusted CI | [Publish npm 成功运行](https://github.com/Mars-Sea/coarena/actions/runs/43559393942) | validate / publish / 公开包校验均成功；未配置 npm token secret |
+| GitHub Release | [Coarena 0.1.2](https://github.com/Mars-Sea/coarena/releases/tag/v0.1.2) | 已发布，tag 与 npm `gitHead` 均为 `7ba1588` |
+| npm | [`coarena@0.1.2`](https://www.npmjs.com/package/coarena) | 已通过 GitHub OIDC 发布，`latest` 为 `0.1.2`；公开 tarball 与 provenance 核对通过 |
+| Trusted CI | [Publish npm 成功运行](https://github.com/Mars-Sea/coarena/actions/runs/43824829269) | validate / publish / 公开包校验均成功；未配置 npm token secret |
 | Magpie | [收录 PR #1122](https://github.com/magpie-community/plugins/pull/1122) | 已提交，维护者因第三方中转服务收录政策关闭；未合并，未获 registry 收录 |
 
 ## 0.1.0 首次发布前验证
@@ -63,3 +63,16 @@
 3. Magpie registry PR #1122 已提交，维护者因第三方中转服务政策关闭，未获收录；按包名安装仍可用。
 
 登录令牌和真实 Coarena Key 不写入命令参数、仓库或本文。真实 Magpie / OpenCode 宿主及 Coarena 端到端结果仍以 [VALIDATION.md](VALIDATION.md) 的边界为准。
+
+## 0.1.2 免费模型与 credits 更新发布
+
+2026-11-16 用户明确要求发布新版，授权本次提交、推送 main 和创建稳定 Release；不包含修复随后提到的 Factory 上下文压缩错误。
+
+- [Release v0.1.2](https://github.com/Mars-Sea/coarena/releases/tag/v0.1.2) 的不可变源码为 `7ba15884cbf40e5fa9783056a29ab5373bf0af28`，与 npm gitHead 及 provenance 的 gitCommit 一致。
+- 本地 83 项离线测试、双入口结构、Node、13 文件打包/解包检查通过；[Node 22 / 24 CI](https://github.com/Mars-Sea/coarena/actions/runs/43824776473) 均成功。
+- [Publish npm](https://github.com/Mars-Sea/coarena/actions/runs/43824829269) 的 validate / publish / 公开包核验均成功。npm 提交后曾短暂返回 404，等待注册表传播后确认可下载，未重复发布。
+- npm latest 已为 0.1.2，公开 publisher 为 GitHub Actions / github。实际 tarball 的 13 个文件逐字节匹配发布源码；SHA-1 与 SHA-512 均匹配 registry。
+- SHA-1：`ace68c7c23720352379892ef571ec934df3986d6`。
+- Integrity：`sha512-AGKzZHPTFXioI5WOFSfpUyGC3E/69oqs04XRMKGRO8lRjhAdlagvnDxoYz4MCxSJq/DoxxeAOWIa5H5TuMqPGQ==`。
+- 实际下载解包至临时目录，无 node_modules / 禁止网络验证双入口、18 模型、三项 free 标签、合成 Paid 钱包及取消提示。没有调用真实 Coarena 推理或读取实际账号凭据。
+- 公开 SLSA provenance 的仓库、workflow、tag、gitCommit、invocationId 与本次运行一致；未另行执行完整 Sigstore 密码学签名验证。真实付费账号余额及 OpenCode 宿主仍待验收，Magpie 免费徽标证据见 VALIDATION.md。
